@@ -1,7 +1,7 @@
 name: Eric's Blog
 description: A place for sharing, and recording, and learning!
 
-url: https://github.com/Root-shady/Flog
+url: "http://rootshady.com" 
 paginate_path: "blog/page:num/"
 permalink: blog/:title/
 
