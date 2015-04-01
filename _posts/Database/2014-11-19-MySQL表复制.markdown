@@ -1,14 +1,13 @@
 ---
-title: 复制新的表(copy a table in mysql)
+title: MySQL表复制
 date: 2014-11-19
 layout: post
-meta: 如何复制一张表格， 即table，使用mysql 
 category: Database
 ---
 
-####如何复制一张表(copy a table)   
-  
-#####方法一：     
+###1. 如何复制一张表(copy a table)    
+
+####方法一：     
     1. 第一步复制它的结构到一张新表  
     > mysql> create table NewTableName like TargetTable;   
     //创建一张和被复制表相同结构的新表    
@@ -19,7 +18,7 @@ category: Database
     > mysql> insert into NewTableName select * from TargetTable;   
     //把每一项数据插入到新表中    
     
-#####实例：
+####实例：
     1. 查看表的结构（Structure）    
     mysql> describe countries;
     +--------------+---------------+------+-----+---------+-------+
@@ -70,18 +69,19 @@ category: Database
     | UN         | The United Kindom |       799 |
     +------------+-------------------+-----------+
 
-#####方法二：  
+####方法二：  
 
     CREATE TABLE IF NOT EXISTS copy    
     AS SELECT * FROM countries;  
     
     实例：省略。  
 
-##### delimiter在mysql中的作用     
+### 2. delimiter在mysql中的作用     
+
 在MYSQL中， 默认是以";"表示命令结束， 也就是说指令加上";"回车后，就会被执行。 那么假设我们要输入的语句包含";"怎么办呢， 这时我们就需要delimiter来重新定义另外的符号来决定命令的结束。
 
 格式就是:   
-> mysql delimiter symbol(can be any symbol)  
+mysql delimiter symbol(can be any symbol)  
 下面给出一个例子：  
     mysql> delimiter $$   //选用命令中不会出现的符号       
     mysql> CREATE TRIGGER insert_triger  
@@ -97,22 +97,24 @@ category: Database
  
     
 
-##### 如何在MYSQL中check功能的替代 
+### 3. 如何在MYSQL中check功能的替代 
+
 The [MySQL Reference Manual](http://dev.mysql.com/doc/refman/5.1/en/create-table.html) says:    
 The CHECK clause is parsed but ignored by all storage engines.  
 也就是说MYSQL中没有实现check的功能。 那么有什么可以实现替代的方法呢。  
-#####使用触发器(trigger)进行替代   
+####使用触发器(trigger)进行替代   
     ->mysql delimiter %%
     -> mysql create trigger insert_salary  
     -> before insert on jobs  //当对表jobs进行插入之前， 进行检查  
     -> for each row  
     -> begin 
-    ->    if new.max_salary > 25000 then    //条件是max_salary < 25000, 如不满足
-    ->            set new.max_salary := 0;  //修改max_salary 的值为0，**目前我还不会拒绝操作**    
+    ->    if new.max_salary > 25000 then    //条件是max_salary < 25000,
+					    //如不满足
+    ->            set new.max_salary := 0;  //修改max_salary 的值为0
     ->    end if; 
     -> end;
     -> %%  //按下回车， 结束命令  
-大致就是这样， 以后再补充吧.  
+
 ####To be continue...
 
 

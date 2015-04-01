@@ -5,67 +5,64 @@ meta: 数据库基本设置， 安装， 账户密码设置。
 layout: post
 category: Database
 ---
-###MySQL 安装 （Ubuntu）
->>$sudo apt-get install mysql-client mysql-server  
+####MySQL 安装 （Ubuntu）
+<pre>             $sudo apt-get install mysql-client mysql-server </pre>
 安装期间设置root密码，也可以直接按Enter跳过。MYSQL最高权限用户名为： root 最高权限数据库：mysql  
+
 ####进入MYSQL shell client
 (对于shell的命令记录功能， mysql也可以使用， 所有可以通过 上下箭头恢复之前的命令)  
->> $mysql -p -u root  
-输入密码 则会弹出 mysql> 提示。（这里指的是在terminal shell的提示）  
+ <pre>              $mysql -p -u root </pre> 
+
+ 输入密码 则会弹出 mysql> 提示。（这里指的是在terminal shell的提示）  
 -u表示username  username紧跟-u选项   -p 表示输入passwd  
 
 I. **如何创建一个无密码用户**    
 
->>> 进入root  
- 
->>> $mysql -p -u root  
+ 进入root 
 
->>> mysql> show databases; 
-   
->>> mysql> create database test;  
-//创建一个数据库test   create database databasename;  
- 
->>> mysql> show databases;     
-//查看创建是否成功 注意s 以及最后语句的分号， 所有mysql以“；”表示结束   
- 
->>> mysql> select user, host, password from mysql.user;   
-//查看当前数据库所有用户。  
-
->>> mysql> create user _username_@localhost;   
-//创建一个新local用户， username为你创建用户名
+    >$mysql -p -u root  
+    >$mysql> show databases;   
+    >$mysql> create database test; 
   
->>> mysql> select user, host, password from mysql.user;   
-//查看是否创建成功  
+II. 创建一个数据库test
 
->>> mysql> select user, host from mysql.db;   
+    create database databasename;  
+    mysql> show databases;     
+    //查看创建是否成功 注意s 以及最后语句的分号， 所有mysql以“；”表示结束   
+    mysql> select user, host, password from mysql.user;   
+    //查看当前数据库所有用户。  
+    mysql> create user _username_@localhost;   
+    //创建一个新local用户， username为你创建用户名
+    mysql> select user, host, password from mysql.user;   
+    //查看是否创建成功  
+
+  mysql> select user, host from mysql.db;   
 //不会出现前面刚创建的用户名  
-
->>> mysql> grant all on test.* to _username_@localhost;   
-//把前面新建的数据库的所有权限赋给username  
-
->>> mysql> select user, host from mysql.db;   
+  mysql> grant all on test.* to _username_@localhost;   
+  //把前面新建的数据库的所有权限赋给username  
+  mysql> select user, host from mysql.db;   
 //出现前面创建的username **原因不清。。.**  
 
->>> 测试创建的用户是否成功。  
+  测试创建的用户是否成功。  
 $mysql -u uername
 //这里没有-p选项因为前面创建的是没有密码的用户
 
 II.  **创建一个有密码用户**    
->>> mysql> create user username@localhost identified by 'password';  
+  mysql> create user username@localhost identified by 'password';  
 //同样可以使用上面的语句对创建状态进行查看， 和赋予相应数据库的权限。    
 
 III.  **数据库授权**  
     (1). 创建一个超级权限用户。 
      
-   > $mysql -p -u root    
+    $mysql -p -u root    
     //进入root用户  
 
-   > mysql> grant all on *.* to username@localhost;  
+    mysql> grant all on *.* to username@localhost;  
     //把所有数据库的所有权限赋予给用户username；     
     
   (2). 创建一个较小权限用户      
     
-   > mysql> grant select on somedb.* to restrited@localhost;   
+ mysql> grant select on somedb.* to restrited@localhost;   
     //把查看(select)某一数据库(somedb)的权限赋予restrited用户  
     
 IV. To be continue... 
