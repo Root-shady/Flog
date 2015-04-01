@@ -1,0 +1,180 @@
+---
+layout: post
+title: "Java实现单链表"
+data: 2015-02-10
+category: Java
+---
+
+<p>Java的单链表实现</p>
+<p>链表是一种线性结构， 每一个节点包含任意的实例数据(data fields)和一个或多个用来指向上一个或下一个节点的位置的链接(links).</p>
+
+<img src="{{ site.url }}/assets/img/Slinkedlist.bmp" alt="">
+<img src="{{ site.url }}/assets/img/SlinkedList.png" alt="">
+
+####链表的优点:
+1. 无需事先知道存储数据的长度， 可实现灵活的内存动态存储。
+2. 非顺序存储， 而是靠存储下一单元的指针， 知道插入点时，
+       插入时可以达到O(1)的复杂度， 当然通常查找需要时间.
+
+**链表通常用于频繁插入和删除的操作**
+{% highlight ruby %}
+public class LinkedList{
+	//Nested class 嵌套定义类
+	private class Node{
+		private Object data; //将数据域定义为私有， 保证封装性
+		private Node next;
+		//Constructors
+		public Node(Object adata, Node aNext){
+			data = adata;
+			next = aNext;
+		}
+		public Node(Object adata){
+			this(adata, null);
+		}
+		//accessor methods
+		public Object getData(){
+			return data;
+		}
+		public Node getNext(){
+			return next;
+		}
+		//Mutator methods ..setter  通过公有方法来修改类的实体变量值
+		public void setData(Object adata){
+			data = adata;
+		}
+		public void setNext(Node anext){
+			next = anext;
+		}
+	}
+
+	private Node head; 
+	private int size; //记录链表的长度
+	//Constructors   //初始化空链表
+	public LinkedList(){
+		head = null;
+		size = 0;
+	}
+	//获取链表的长度
+	public int length(){
+		return size;
+	}
+	//判定链表是否含有某元素  采用equals方法注意adata可能为空
+	public boolean isContain(Object adata){ //Notice that the data may be null
+		Node temp = head;
+		while(temp != null){
+			if(temp.getData().equals(adata))
+				return true;
+			temp = temp.getNext();
+		}
+		return false;
+	}
+	//找到某一元素在链表中的索引(reference)
+	public Node find(Object adata){
+		Node temp = head;
+		while(temp != null){
+			if(temp.getData().equals(adata)) //Return a reference to the rest of the nodes
+				return temp;   //instead of sending back only one node
+			temp = temp.getNext();
+		}
+		return null;
+	}
+	//遍历链表
+	public void traverList(){
+		Node temp = head;
+		while(temp != null){
+			System.out.print(temp.getData() + "-->");
+			temp = temp.getNext();
+		}
+		System.out.println();
+	}
+	//添加链表头元素
+	public void addFirst(Object adata){
+		head = new Node(adata, head);
+		size ++;
+	}
+	//删除链表头元素
+	public Node removeFirst(){     //return only one node, instead of a reference.
+		if(head == null)
+			return null;
+		Node temp = head;
+		head = head.getNext();
+		temp.setNext(null);
+		size --;
+		return temp;
+	}
+	//添加链表尾元素， 注意链表为空时的处理
+	public void addLast(Object adata){
+		Node temp = head;
+		Node current = null;
+		//locate the last node in the list
+		if(size == 0)
+			head = new Node(adata);
+		else{
+			while(temp != null){
+			current = temp;
+			temp = temp.getNext();
+			}
+			current.setNext(new Node(adata));
+		}
+		size ++;
+	}
+	//移除链表的尾元素， 通过遍历找到倒数第二个元素的索引
+	public Node removeLast(){
+		Node temp = head;
+		Node current = null;		
+		if(head == null)
+			return null;
+		else if(head.getNext() == null){
+			head = null;
+		} 
+		else{
+			while(temp.getNext() != null){
+				current = temp;
+				temp = temp.getNext();
+			}
+			current.setNext(null);
+		}
+		size --;
+		return temp;
+	}
+       //找到指定元素， 并进行插入
+	public boolean findAndInsertAfter(Object target, Object adata){
+		Node temp = head;
+		while(temp != null){
+			if(temp.getData().equals(target)){
+				temp.setNext(new Node(adata, temp.getNext()));
+				size ++;
+				return true;
+			}
+			temp = temp.getNext();
+		}
+		return false;
+	}
+	//对链表进行测试
+	public static void main(String[] args) {
+		LinkedList list = new LinkedList();
+		list.addFirst("Happy");
+		list.addFirst(909);
+		list.addLast(true);
+		list.findAndInsertAfter(909,"Baby");
+		list.removeLast();
+		list.removeFirst();
+		list.traverList();
+		if(list.isContain("Baby"))
+			System.out.println("I am yours!");
+		System.out.println("The length of the list: " + list.length());
+	}
+}
+{% endhighlight %}
+####总结：
+
+* 可以添加尾部tail指向链表的最后一个元素， 减少插入尾部元素的遍历时间。   
+* 使用equals方法时， 应确保调用equals方法的实体不为null, 否则会出现
+    NullPointerException 也可以采用下面的方法解决if(A != null && A.equals(B))
+* 当从链表删除一个节点时， 如果这个节点是不可达(unreachable)， 则会被GC 自动回收。
+    如果程序还有变量保留它的reference, 则java自带垃圾回收机制不会进行回收。
+    所以程序中使用了 temp.setNext(null); 将该节点从链表断开， 事实上这一步可以省略，
+    不过加上更能体现程序的意图。关于这个问题， 我在 [Stack Overflow][question] 上， 
+    提了这问题，check iy out.
+
+[question]: http://stackoverflow.com/questions/29349920/implementation-of-removefirst-method-in-slinkedlist-in-java
