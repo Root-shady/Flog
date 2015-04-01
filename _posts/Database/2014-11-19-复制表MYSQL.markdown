@@ -1,0 +1,122 @@
+---
+title: 复制新的表(copy a table in mysql)
+date: 2014-11-19
+layout: post
+meta: 如何复制一张表格， 即table，使用mysql 
+category: Database
+---
+
+###如何复制一张表(copy a table)   
+  
+####方法一：     
+    1. 第一步复制它的结构到一张新表  
+    > mysql> create table NewTableName like TargetTable;   
+    //创建一张和被复制表相同结构的新表    
+    > mysql> describe NewTableName  
+     //查看创建的新表状态    
+    
+    2. 第二步 复制目标表的数据到创建的新表    
+    > mysql> insert into NewTableName select * from TargetTable;   
+    //把每一项数据插入到新表中    
+    
+####实例：
+    1. 查看表的结构（Structure）    
+    mysql> describe countries;
+    +--------------+---------------+------+-----+---------+-------+
+    | Field        | Type          | Null | Key | Default | Extra |
+    +--------------+---------------+------+-----+---------+-------+
+    | country_id   | varchar(2)    | YES  |     | NULL    |       |
+    | country_name | varchar(40)   | YES  |     | NULL    |       |
+    | region_id    | decimal(10,0) | YES  |     | NULL    |       |
+    +--------------+---------------+------+-----+---------+-------+
+
+
+    2. 查看表的内容（Data）      
+    mysql> select * from countries;  
+    +------------+-------------------+-----------+      
+    | country_id | country_name      | region_id |  
+    +------------+-------------------+-----------+  
+    | CN         | China             |       897 |  
+    | US         | The United States |       899 |  
+    | UN         | The United Kindom |       799 |  
+    +------------+-------------------+-----------+  
+    
+    3. 创建相同的结构的新表并查看其结构。 
+     
+    mysql> create table copy like countries;
+    Query OK, 0 rows affected (0.10 sec)
+
+    mysql> describe copy;
+    +--------------+---------------+------+-----+---------+-------+
+    | Field        | Type          | Null | Key | Default | Extra |
+    +--------------+---------------+------+-----+---------+-------+
+    | country_id   | varchar(2)    | YES  |     | NULL    |       |
+    | country_name | varchar(40)   | YES  |     | NULL    |       |
+    | region_id    | decimal(10,0) | YES  |     | NULL    |       |
+    +--------------+---------------+------+-----+---------+-------+
+    
+    4. 复制数据(Data)并查看结果。  
+    
+    mysql> insert into copy select * from countries;
+    Query OK, 3 rows affected (0.00 sec)
+    Records: 3  Duplicates: 0  Warnings: 0
+
+    mysql> select * from copy;
+    +------------+-------------------+-----------+
+    | country_id | country_name      | region_id |
+    +------------+-------------------+-----------+
+    | CN         | China             |       897 |
+    | US         | The United States |       899 |
+    | UN         | The United Kindom |       799 |
+    +------------+-------------------+-----------+
+
+####方法二：  
+
+    CREATE TABLE IF NOT EXISTS copy    
+    AS SELECT * FROM countries;  
+    
+    实例：省略。  
+### delimiter在mysql中的作用     
+在MYSQL中， 默认是以";"表示命令结束， 也就是说指令加上";"回车后，就会被执行。 那么假设我们要输入的语句包含";"怎么办呢， 这时我们就需要delimiter来重新定义另外的符号来决定命令的结束。
+格式就是:   
+> mysql delimiter symbol(can be any symbol)  
+下面给出一个例子：  
+    mysql> delimiter $$   //选用命令中不会出现的符号       
+    mysql> CREATE TRIGGER insert_triger  
+    -> BEFORE INSERT ON Teacher  //Teacher表  
+    -> FOR EACH ROW  
+    -> AS BEGIN  
+    ->    IF(new.salary<2000)THEN  
+    ->       set new.salary := 0; //如果没有通过delimiter改变符号， 这时命令就会结束  
+    ->    END IF;  
+    ->  END;  
+    -> $$  //此时按下回车则会结束命令输入   
+    -> delimiter ; //修改为默认值 即分号 ';'  
+ 
+    
+
+### 如何在MYSQL中check功能的替代 
+The [MySQL Reference Manual](http://dev.mysql.com/doc/refman/5.1/en/create-table.html) says:    
+The CHECK clause is parsed but ignored by all storage engines.  
+也就是说MYSQL中没有实现check的功能。 那么有什么可以实现替代的方法呢。  
+####使用触发器(trigger)进行替代   
+    ->mysql delimiter %%
+    -> mysql create trigger insert_salary  
+    -> before insert on jobs  //当对表jobs进行插入之前， 进行检查  
+    -> for each row  
+    -> begin 
+    ->    if new.max_salary > 25000 then    //条件是max_salary < 25000, 如不满足
+    ->            set new.max_salary := 0;  //修改max_salary 的值为0，**目前我还不会拒绝操作**    
+    ->    end if; 
+    -> end;
+    -> %%  //按下回车， 结束命令  
+大致就是这样， 以后再补充吧.  
+##To be continue...
+
+
+
+
+
+ 
+    
+

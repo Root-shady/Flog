@@ -27,18 +27,18 @@
     <body>
         <div class="header">
             <div class="container">
-                <h1 class="logo"><a href="{{ site.baseurl }}">{{ site.name }}</a></h1>
+                <h1 class="logo"><a href="{{ site.url }}/index.html">{{ site.name }}</a></h1>
                 <nav class="nav-collapse">
                     <ul class="noList">
                     {% for link in site.navigation %}{% assign current = nil %}{% if page.url contains link.url %}{% assign current = 'current' %}{% endif %}
                     {% endfor %}
                        
-		    <li><a href="{{ site.baseurl }}{{ link.url }}">Home</a></li>
-		    <li><a href="{{ site.baseurl }}">LifeHacking</a></li>
-		    <li><a href="{{ site.baseurl }}">Database</a></li>
-		    <li><a href="{{ site.baseurl }}">Linux</a></li>
-		    <li><a href="{{ site.baseurl }}">Java</a></li>
-		    <li><a href="{{ site.baseurl }}\about.html">About</a></li>
+		    <li><a href="{{ site.url}}/index.html">Home</a></li>
+		    <li><a href="{{ site.baseurl }}/LifeHacking.html">LifeHacking</a></li>
+		    <li><a href="{{ site.baseurl }}Database.html">Database</a></li>
+		    <li><a href="{{ site.baseurl }}/Linux.html">Linux</a></li>
+		    <li><a href="{{ site.baseurl }}/Java.html">Java</a></li>
+		    <li><a href="{{ site.baseurl }}/about.html">About</a></li>
 		    </ul>
                 </nav>
             </div>
