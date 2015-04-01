@@ -1,6 +1,6 @@
 name: Eric's Blog
 description: A place for sharing, and recording, and learning!
-url: "https://rootshady.com"
+url: "http://rootshady.com"
 baseurl: ""
 paginate_path: "blog/page:num/"
 permalink: blog/:title/
