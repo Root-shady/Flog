@@ -175,6 +175,6 @@ public class LinkedList{
     如果程序还有变量保留它的reference, 则java自带垃圾回收机制不会进行回收。
     所以程序中使用了 temp.setNext(null); 将该节点从链表断开， 事实上这一步可以省略，
     不过加上更能体现程序的意图。关于这个问题， 我在 [Stack Overflow][question] 上， 
-    提了这问题，check iy out.
+    提了这问题，check it out.
 
 [question]: http://stackoverflow.com/questions/29349920/implementation-of-removefirst-method-in-slinkedlist-in-java
