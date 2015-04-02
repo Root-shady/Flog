@@ -1,0 +1,98 @@
+---
+title: VIM指令 
+date: 2015-02-24
+layout: post
+category: Linux 
+---
+   <p class="intro"><span class="dropcap"> V</span>im是由vi发展出来的文本编辑器, 是Vi IMproved缩写。 Vim有一个比较陡峭的学习曲线， 不过一旦掌握一些基本操作后， 能够大幅度提高编辑效率， 借用一些简单的指令组合， 能够实现复杂的需求，Vim的可扩展性赋予了它强大的生命力，这跟Linux文化息息相关。</p> 
+   
+   <img src="{{ site.url }}/assets/img/vim.png" alt="">
+   
+   初级的Vim指令可以从网上找到很多学习资料，这篇博客大部分记录的是我新get的vim指令， 意味着这不是介绍篇， 文章基本会覆盖如何添加插件(plugins)，以提高Vim的使用效率。 如何快速在Vim上跳跃， 如何使用registers和Macros解决重复性问题等、、、事实上， 这篇博客就是使用Vim编辑器完成的，(中文并不太合适) 对于使用github发布博客， 在Linux使用Vim还是相对方便的。反正不断尝试,选择合适自己的工具.
+####快速跳转
+   **注意一点， 下面的方法基本都可以在前面加上数字， 来表示重复该操作   
+   例如 k意味着向上跳1行，5k意味着向上跳5行.**
+
+1. 使用 h 向左跳一个字符   j 向下跳一行   k 向上跳一行   l向右跳一个字符， 类似使用方向键。  
+2. 使用w和b在单词间跳转  w意味着forward向前跳一个词   b意味着backward向后跳一个词
+3. 使用$跳到当前行的行末，  0跳到当前行的开头，  ^跳到当前行的第一个字符。
+4. 使用gg跳转到文件开头，  大写G跳到文件结尾，  numberG跳到指定的number行。 比如5G跳到第5行。   
+5. 段间跳跃， 使用{ 向上跳一段   } 向下跳一段.   5{表示向上跳5段。
+6. 屏幕跳转 Ctrl-f 向前翻转一次屏幕 像PageDown。 Ctrl-b向后翻转一次屏幕PageUp
+  * H 跳转到当前屏幕的第一行
+  * L 跳转到当前屏幕的最后一行
+  * M 跳转到当前屏幕的中间
+7. 使用Macros进行标记跳跃  比如在某一点设置一个标记， 然后跳转回来.
+    在标记行 按m 进行标记mark， 然后选择register记下当前位置， 比如register a,
+    然后你可以到别处进行编辑， 当你想返回时， 按单引号和register的名字就能返回。
+ 比如你在20行处， 按下 ma, 将当前行记录在Register a， 然后你在别处想跳回标记处， 按下'a就能跳回。 接下来你能使用两个单引号''在两个地方跳转。
+
+####Vim小技巧
+1. 如何调整当前行显示
+    * zt 将当前行置于屏幕顶部显示，t表示top
+    * zb 将当前行置于屏幕底部显示，b表示bottom
+    * zz 将当前行置于屏幕中间显示
+2. 如何使用register 和 Macros记录操作   
+    命名寄存器	a-z,A-Z	存放文本    
+    1. 按下q 然后选择一个命名寄存器， 比如a，显示开始记录Recording
+    2. 对当前行进行操作， 操作完后 按q退出记录
+    3. 使用@Register 来重复刚才的操作   
+    
+举例说明：   
+假如你有下面文本(假设有几百行)
+
+{% highlight ruby %}
+<option value = "BL">Bonalie</option>   
+<option value = "CN">China</option>   
+<option value = "UK">United Kindom</option>   
+<option value = "US">United State</option>   
+...
+{% endhighlight %}
+
+现在要你将里面的国家名提取出来，    
+也就是删掉<.option value>等多余项      
+手工一行一行删除可行性低～～～      
+<pre>   
+    现在采用上面的方法   
+    qa 	  开始记录Macro
+    df>	  这条指令是从当前光标开始删除直到第一个<的出现.
+    f<	  在这一行寻找下一个<, 将光标定位到<
+    d$	  从< 字符开始删除直到这一行结束
+    j0	  j跳到下一行， 0将光标置于行首 
+    q	  结束Macro的记录
+    @a 	  调用该Macro，可以看到对改行执行同样操作。
+    到此， 你可以使用100@a 对余下的行进行相同操作。   
+</pre>    
+####安装插件
+1. 安装pathogen， 该插件用于管理其他插件
+2. 找到pathogen在github上的位置， 也可以直接下载
+3. 在本地的~/.vim 文件夹中建立两个文件夹， 分别命名为autoload bundle, bundle 用于存放其他插件分类   
+
+{% highlight ruby %} 
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+使用下面命令下载pathogen.vim到autoload文件夹
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+{% endhighlight %}
+
+.4. Windows 可直接到github上下载pathogen.vim,置于Vim匹配文件夹中
+   url:  https://github.com/tpope/vim-pathogen    
+.5. 修改 ~/.vimrc文件， 这是Vim的配置文件(configuration file)
+    添加下面语句 execute pathogen#infect()   
+.6. 以后安装其他插件都放到bundle文件夹
+
+####安装NERDTree插件
+   直接到github上下载  找到DownloadZip下载， 解压放到bundle文件夹
+{% highlight ruby %}
+或则直接在bundle文件夹中使用
+git clone https://github.com/scrooloose/nerdtree
+将该repository克隆到本地
+{% endhighlight %}
+  设置如何打开NERNTree， 修改~/.vimrc 文件
+{% highlight ruby %}
+" 设置NerdTree
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+{% endhighlight %}
+  下面是效果图：
+   <img src="{{ site.url }}/assets/img/NerdTree.png" alt="">
+  基本使用参见google
