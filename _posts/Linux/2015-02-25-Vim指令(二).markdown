@@ -1,0 +1,39 @@
+---
+title: VIM指令(二)
+layout: post
+date: 2015-02-25
+comment: false
+category: Linux
+---
+   <p class="intro"><span class="dropcap"> V</span>isual Mode可视化模式， 是Vim的一个工作模式， 本文章将演示如何在Visual mode下对文本进行编辑， 实现代码块缩进,对选定文本大小写转换， 对选定区域进行查找修改等功能。</p>
+####如何进入Visual Mode
+
+1. Vim的常用模式
+    * 命令行模式(Command Line Mode)    
+      打开Vim的默认模式
+    * 插入模式(Insert Mode)    
+      进行文本编辑
+    * 可视模式(Visual Mode)    
+2. 可视模式下有三种选定模式， 被选定的文本会高亮显示。
+    * plain visual mode   
+	按v进入正常模式， 从光标开始处进行高亮，通过hjkl来控制选定范围。
+	通过按v 或则 ESC退出Visual mode
+    * block visual mode   
+	通过Ctrl-v进入块模式，可以通过hjkl或方向键选定某一块区域。
+    * linewise visual mode
+	通过Shift-v 进入行选择模式， 只能整行选择，通过jk进行选定。
+    * 事实上也可以通过鼠标选定区域   
+{% highlight ruby %}
+如果高亮文法部分不清晰， 可以通过下面设置修改，在 ~/.vimrc文件添加	 
+Visual  guifg=White guibg=LightBlue gui=none
+{% endhighlight %}
+具体请见[Stack Overflow- Change the color of the selected code?][visual]
+[visual]: http://stackoverflow.com/questions/3074068/how-to-change-the-color-of-the-selected-code-vim-scheme
+
+####如何实现代码块缩进
+   事实上， 在Visual Mode选定了区域后，就相当于只对当前选定的区域进行操作。 下面列举一些常用操作。
+<pre>
+dd 	删除选定的区域。
+:s/target/replace/g 	对当前区域进行查找target并替换成replace
+Shift~   	将选定区域的大写转换为小写， 同时将小转换为大写写
+</pre>

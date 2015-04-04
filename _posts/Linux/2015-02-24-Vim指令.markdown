@@ -2,6 +2,7 @@
 title: VIM指令 
 date: 2015-02-24
 layout: post
+comment: true
 category: Linux 
 ---
    <p class="intro"><span class="dropcap"> V</span>im是由vi发展出来的文本编辑器, 是Vi IMproved缩写。 Vim有一个比较陡峭的学习曲线， 不过一旦掌握一些基本操作后， 能够大幅度提高编辑效率， 借用一些简单的指令组合， 能够实现复杂的需求，Vim的可扩展性赋予了它强大的生命力，这跟Linux文化息息相关。</p> 

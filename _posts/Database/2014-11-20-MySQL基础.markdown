@@ -2,6 +2,7 @@
 title: MySQL 基础
 date: 2014-11-20 22:04:30
 meta: 数据库基本设置， 安装， 账户密码设置。
+comment: true
 layout: post
 category: Database
 ---

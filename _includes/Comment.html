@@ -1,0 +1,45 @@
+<ul class="listing comments">
+    {% for comment in site.data.comments.sessions %}
+    {% if comment.path == page.url %}
+    <li>
+	<img src="{{ comment.avatar }}" alt="{{ comment.name }}">
+	<time datetime="{{ comment.created | date_to_xmlschema }}">{{ comment.created | date_to_long_string  }}</time>
+      {% if comment.url %}
+    	<a href="{{ comment.url }}" class="commenter">{{ comment.name }}</a>
+      {% else %}
+		<span class="commenter">{{ comment.name }}</span>
+      {% endif %}
+      <div>
+	{{ comment.comment }}
+       </div>
+      </li>
+     {% endif %}
+{% endfor %}
+</ul>
+
+<div class="Comments">
+<form action="http://pooleapp.com/stash/54e9f440-4447-4928-90cb-fb4e2e599583/" method="post" class="STYLE-NAME">
+    	<h2>给我留言: 
+		<span>All of the buildings, all of those cars were once just a dream in somebody's head.</span>
+	</h2>
+	<label>
+		<span>Your Name :</span>
+		<input id="name" type="text" name="name" placeholder="姓名(Your Name)" />
+	</label>
+
+	<label>
+	    <span>Your Email :</span>
+	    <input id="email" type="email" name="email" placeholder="邮件(Valid Email Address)" />
+	</label>
+
+	<label>
+	    <span>Message :</span>
+	    <textarea id="message" name="message" placeholder="留言(Your Message)"></textarea>
+	</label> 
+
+	<label>
+	    <span>&nbsp;</span> 
+	    <input type="button" class="button" value="Send" /> 
+	</label>    
+</form>
+</div>
