@@ -9,11 +9,11 @@ category: Linux
 ####如何进入Visual Mode
 
 1. Vim的常用模式
-    * 命令行模式(Command Line Mode)    
-      打开Vim的默认模式
-    * 插入模式(Insert Mode)    
-      进行文本编辑
-    * 可视模式(Visual Mode)    
+	* 命令行模式(Command Line Mode)    
+	  打开Vim的默认模式
+	* 插入模式(Insert Mode)    
+	  进行文本编辑
+	* 可视模式(Visual Mode)    
 2. 可视模式下有三种选定模式， 被选定的文本会高亮显示。
     * plain visual mode   
 	按v进入正常模式， 从光标开始处进行高亮，通过hjkl来控制选定范围。
@@ -33,7 +33,30 @@ Visual  guifg=White guibg=LightBlue gui=none
 ####如何实现代码块缩进
    事实上， 在Visual Mode选定了区域后，就相当于只对当前选定的区域进行操作。 下面列举一些常用操作。
 <pre>
-dd 	删除选定的区域。
-:s/target/replace/g 	对当前区域进行查找target并替换成replace
-Shift~   	将选定区域的大写转换为小写， 同时将小转换为大写写
+	d 						删除选定的区域。
+	:s/target/replace/g 	对当前区域进行查找target并替换成replace
+	Shift~   				将选定区域的大写转换为小写， 同时将小转换为大写
+
+	实现代码缩进：
+	1. Shift-v进入行选择模式， 选定要缩进的代码块   
+	2. 使用>>向右缩进， <<向左缩进   
+	上面的方法缩进一次后会自动退出行模式， 如何实现连续缩进   
+	3. 修改~/.vimrc 文件， 添加下面的语句   
+		*	vnoremap < <gv      
+		*	vnoremap > >gv   
+	4.重复上面方法， 可以实现连续缩进。   
 </pre>
+
+####实现代码块的注释
+<pre>
+	1. Ctrl-v 进入块模式选择要插入注释的地方(记得0可以返回行的开始)
+	2. 使用j,k 选定要注释的代码
+	3. 使用Shift-I 进行插入模式
+	4. 插入要插入的内容， 比如#, //
+	5. 按 ESC键 可以看到实现了注释功能
+	
+	实现uncomment功能， 在块模式选定要删除的内容，
+	使用d 或者 x可以删除。
+	似乎可以自己设置快捷键， 以后再研究一下。
+</pre>
+

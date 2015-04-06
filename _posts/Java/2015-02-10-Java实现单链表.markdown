@@ -19,153 +19,153 @@ category: Java
 
 **链表通常用于频繁插入和删除的操作**
 {% highlight ruby %}
-public class LinkedList{
-	//Nested class 嵌套定义类
-	private class Node{
-		private Object data; //将数据域定义为私有， 保证封装性
-		private Node next;
-		//Constructors
-		public Node(Object adata, Node aNext){
-			data = adata;
-			next = aNext;
-		}
-		public Node(Object adata){
-			this(adata, null);
-		}
-		//accessor methods
-		public Object getData(){
-			return data;
-		}
-		public Node getNext(){
-			return next;
-		}
-		//Mutator methods ..setter  通过公有方法来修改类的实体变量值
-		public void setData(Object adata){
-			data = adata;
-		}
-		public void setNext(Node anext){
-			next = anext;
-		}
-	}
-
-	private Node head; 
-	private int size; //记录链表的长度
-	//Constructors   //初始化空链表
-	public LinkedList(){
-		head = null;
-		size = 0;
-	}
-	//获取链表的长度
-	public int length(){
-		return size;
-	}
-	//判定链表是否含有某元素  采用equals方法注意adata可能为空
-	public boolean isContain(Object adata){ //Notice that the data may be null
-		Node temp = head;
-		while(temp != null){
-			if(temp.getData().equals(adata))
-				return true;
-			temp = temp.getNext();
-		}
-		return false;
-	}
-	//找到某一元素在链表中的索引(reference)
-	public Node find(Object adata){
-		Node temp = head;
-		while(temp != null){
-			if(temp.getData().equals(adata)) //Return a reference to the rest of the nodes
-				return temp;   //instead of sending back only one node
-			temp = temp.getNext();
-		}
-		return null;
-	}
-	//遍历链表
-	public void traverList(){
-		Node temp = head;
-		while(temp != null){
-			System.out.print(temp.getData() + "-->");
-			temp = temp.getNext();
-		}
-		System.out.println();
-	}
-	//添加链表头元素
-	public void addFirst(Object adata){
-		head = new Node(adata, head);
-		size ++;
-	}
-	//删除链表头元素
-	public Node removeFirst(){     //return only one node, instead of a reference.
-		if(head == null)
-			return null;
-		Node temp = head;
-		head = head.getNext();
-		temp.setNext(null);
-		size --;
-		return temp;
-	}
-	//添加链表尾元素， 注意链表为空时的处理
-	public void addLast(Object adata){
-		Node temp = head;
-		Node current = null;
-		//locate the last node in the list
-		if(size == 0)
-			head = new Node(adata);
-		else{
-			while(temp != null){
-			current = temp;
-			temp = temp.getNext();
-			}
-			current.setNext(new Node(adata));
-		}
-		size ++;
-	}
-	//移除链表的尾元素， 通过遍历找到倒数第二个元素的索引
-	public Node removeLast(){
-		Node temp = head;
-		Node current = null;		
-		if(head == null)
-			return null;
-		else if(head.getNext() == null){
-			head = null;
-		} 
-		else{
-			while(temp.getNext() != null){
-				current = temp;
-				temp = temp.getNext();
-			}
-			current.setNext(null);
-		}
-		size --;
-		return temp;
-	}
-       //找到指定元素， 并进行插入
-	public boolean findAndInsertAfter(Object target, Object adata){
-		Node temp = head;
-		while(temp != null){
-			if(temp.getData().equals(target)){
-				temp.setNext(new Node(adata, temp.getNext()));
-				size ++;
-				return true;
-			}
-			temp = temp.getNext();
-		}
-		return false;
-	}
-	//对链表进行测试
-	public static void main(String[] args) {
-		LinkedList list = new LinkedList();
-		list.addFirst("Happy");
-		list.addFirst(909);
-		list.addLast(true);
-		list.findAndInsertAfter(909,"Baby");
-		list.removeLast();
-		list.removeFirst();
-		list.traverList();
-		if(list.isContain("Baby"))
-			System.out.println("I am yours!");
-		System.out.println("The length of the list: " + list.length());
-	}
-}
+1.	public class LinkedList{
+2.		//Nested class 嵌套定义类
+3.		private class Node{
+4.			private Object data; //将数据域定义为私有， 保证封装性
+5.			private Node next;
+6.			//Constructors
+7.			public Node(Object adata, Node aNext){
+8.				data = adata;
+9.				next = aNext;
+10.			}
+11.			public Node(Object adata){
+12.				this(adata, null);
+13.			}
+14.			//accessor methods
+15.			public Object getData(){
+16.				return data;
+17.			}
+18.			public Node getNext(){
+19.				return next;
+20.			}
+21.			//Mutator methods ..setter  通过公有方法来修改类的实体变量值
+22.			public void setData(Object adata){
+23.				data = adata;
+24.			}
+25.			public void setNext(Node anext){
+26.				next = anext;
+27.			}
+28.		}
+29.	
+30.		private Node head; 
+31.		private int size; //记录链表的长度
+32.		//Constructors   //初始化空链表
+33.		public LinkedList(){
+34.			head = null;
+35.			size = 0;
+36.		}
+37.		//获取链表的长度
+38.		public int length(){
+39.			return size;
+40.		}
+41.		//判定链表是否含有某元素  采用equals方法注意adata可能为空
+42.		public boolean isContain(Object adata){ //Notice that the data may be null
+43.			Node temp = head;
+44.			while(temp != null){
+45.				if(temp.getData().equals(adata))
+46.					return true;
+47.				temp = temp.getNext();
+48.			}
+49.			return false;
+50.		}
+51.		//找到某一元素在链表中的索引(reference)
+52.		public Node find(Object adata){
+53.			Node temp = head;
+54.			while(temp != null){
+55.				if(temp.getData().equals(adata)) //Return a reference to the rest of the nodes
+56.					return temp;   //instead of sending back only one node
+57.				temp = temp.getNext();
+58.			}
+59.			return null;
+60.		}
+61.		//遍历链表
+62.		public void traverList(){
+63.			Node temp = head;
+64.			while(temp != null){
+65.				System.out.print(temp.getData() + "-->");
+66.				temp = temp.getNext();
+67.			}
+68.			System.out.println();
+69.		}
+70.		//添加链表头元素
+71.		public void addFirst(Object adata){
+72.			head = new Node(adata, head);
+73.			size ++;
+74.		}
+75.		//删除链表头元素
+76.		public Object removeFirst(){     //return only one node, instead of a reference.
+77.			if(head == null)
+78.				return null;
+79.			Node temp = head;
+80.			head = head.getNext();
+81.			temp.setNext(null);
+82.			size --;
+83.			return temp.getData();
+84.		}
+85.		//添加链表尾元素， 注意链表为空时的处理
+86.		public void addLast(Object adata){
+87.			Node temp = head;
+88.			Node current = null;
+89.			//locate the last node in the list
+90.			if(size == 0)
+91.				head = new Node(adata);
+92.			else{
+93.				while(temp != null){
+94.				current = temp;
+95.				temp = temp.getNext();
+96.				}
+97.				current.setNext(new Node(adata));
+98.			}
+99.			size ++;
+100.		}
+101.		//移除链表的尾元素， 通过遍历找到倒数第二个元素的索引
+102.		public Object removeLast(){
+103.			Node temp = head;
+104.			Node current = null;		
+105.			if(head == null)
+106.				return null;
+107.			else if(head.getNext() == null){
+108.				head = null;
+109.			} 
+110.			else{
+111.				while(temp.getNext() != null){
+112.					current = temp;
+113.					temp = temp.getNext();
+114.				}
+115.				current.setNext(null);
+116.			}
+117.			size --;
+118.			return temp.getData();
+119.		}
+120.	       //找到指定元素， 并进行插入
+121.		public boolean findAndInsertAfter(Object target, Object adata){
+122.			Node temp = head;
+123.			while(temp != null){
+124.				if(temp.getData().equals(target)){
+125.					temp.setNext(new Node(adata, temp.getNext()));
+126.					size ++;
+127.					return true;
+128.				}
+129.				temp = temp.getNext();
+130.			}
+131.			return false;
+132.		}
+133.		//对链表进行测试
+134.		public static void main(String[] args) {
+135.			LinkedList list = new LinkedList();
+136.			list.addFirst("Happy");
+137.			list.addFirst(909);
+138.			list.addLast(true);
+139.			list.findAndInsertAfter(909,"Baby");
+140.			list.removeLast();
+141.			list.removeFirst();
+142.			list.traverList();
+143.			if(list.isContain("Baby"))
+144.				System.out.println("I am yours!");
+145.			System.out.println("The length of the list: " + list.length());
+146.		}
+147.	}
 {% endhighlight %}
 ####总结：
 
@@ -177,5 +177,14 @@ public class LinkedList{
     所以程序中使用了 temp.setNext(null); 将该节点从链表断开， 事实上这一步可以省略，
     不过加上更能体现程序的意图。关于这个问题， 我在 [Stack Overflow][question] 上， 
     提了这问题，check it out.
-
+*  在51行处， 定义了find函数， 似乎违反了ADT 的represent invariant原则， 针对单链表其主要可以表述为：
+	1. 数据域定义为private防止其他类修改其数据， 只能通过调用类定义的修改方法进行修改(mutator),使用内部类同样是为了加强其封装性。
+	2. 对于ADT，只能通过类中定义的操作对其进行修改， 而find方法返回了链表的引用(reference), 这可能导致用户不通过类中定义的方法而直接对链表进行操作， 容易出错。
+* 通过Java的泛型， 重新实现了单链表， ckeck it out.[Geric Singly Linked List][link]   
+	Java泛型的好处：   
+		1. 类型安全。 泛型的一个主要目标就是提高 Java 程序的类型安全。使用泛型可以使编译器知道变量的类型限制，进而可以在更高程度上验证类型假设。如果没有泛型，那么类型的安全性主要由程序员来把握，这显然不如带有泛型的程序安全性高   
+		2. 消除强制类型转换。泛型可以消除源代码中的许多强制类型转换，这样可以使代码更加可读，并减少出错的机会。    
+		3. 性能收益。目前来讲，用 GJ 编写的代码和一般的 Java 代码在效率上是非常接近的。 但是由于泛型会给 Java 编译器和虚拟机带来更多的类型信息，因此利用这些信息对 Java 程序做进一步优化将成为可能   
 [question]: http://stackoverflow.com/questions/29349920/implementation-of-removefirst-method-in-slinkedlist-in-java
+[link]: {{ site.url }}/fileStore/SLinkedList.java
+
