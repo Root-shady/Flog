@@ -130,6 +130,9 @@ comment: true
 102	}
 103}
 {% endhighlight %}
+
+####程序的源码：[LinkedStack.java][link]   
+
 ####总结：
 1. 当栈满的时候,继续使用push()时,会引发栈溢出(stack overflow)   
    当栈空的时候,继续使用pop()时, 会引发堆栈下溢(stack underflow)    
@@ -145,4 +148,4 @@ comment: true
   抛出一个AssertionError并使程序停止.Debugg.   
   运行程序时， 需要使用以下格式: java -ea fileName
 [Wiki]:http://en.wikipedia.org/wiki/Class_invariant
-
+[link]: {{ site.url }}/fileStore/LinkedStack.java
