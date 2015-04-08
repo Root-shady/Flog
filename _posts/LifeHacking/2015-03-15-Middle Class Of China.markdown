@@ -5,6 +5,7 @@ data: 2015-03-15
 comment: true
 category: LifeHacking 
 ---
+<p style="text-align: right;">作者： 黄东阳</p>
 <div class="intro">
 <p style = "text-indent: 50px;"> 
 	Abstracts: With the inspiration of American dream, the middle class of America came into existence, played an essential role in many aspects of American society, including economy, politics, education, etc., which is still shaping or even changing the progress of America. Meanwhile, the number of middle class in China is expanding explosively due to the rapid development of economy.
