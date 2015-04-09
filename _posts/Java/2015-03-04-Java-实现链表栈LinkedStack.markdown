@@ -2,7 +2,7 @@
 layout: post
 date: 2015-03-04
 category: Java
-title: "Java 实现链表栈LinkedStack"
+title: "Java 实现堆栈Stack"
 comment: true
 ---
 <p class="intro"><span class="dropcap">栈</span>又称堆栈，是一种受限制的线性表，其限制是只允许在表的一端进行插入和删除。允许操作的一端称为栈顶（top），不允许操作的称为栈底(bottom)，每次删除的数据元素总是最后插入的数据元素, 其特点为LIFO，即后进先出（Last in, first out）.</p>
@@ -15,8 +15,10 @@ comment: true
 1. T pop() 出栈操作，弹出(删除)栈顶元素.   
 2. void push(T e) 入栈操作    
 3. T peek() 返回栈顶元素,不对栈顶元素做删除操作      
-4. boolean isEmpty() 栈是否为空  
-####代码实现：
+4. boolean isEmpty() 栈是否为空      
+
+####使用链表代码实现：    
+
 {% highlight ruby %}
 1  import java.util.NoSuchElementException;
   
@@ -131,7 +133,124 @@ comment: true
 103}
 {% endhighlight %}
 
-####程序的源码：[LinkedStack.java][link]   
+
+####利用LinkedList实现LinekedStack    
+
+	{% highlight ruby %}
+	//stack的接口interface
+	public interface Stack<E>{
+		void push(E item);
+		E pop();
+		E peek();
+		int size();
+		boolean isEmpty();
+	}
+	//基于LinkedList实现stack
+	import java.util.LinkedList;
+	import java.util.Iterator;
+	public class StackLink<E> implements Stack<E>{
+		private LinkedList<E> list = new LinkedList<E>();
+		public void push(E item){ list.addFirst(item); }
+		public E pop(){ return list.removeFirst(); }
+		public E peek(){ return list.getFirst(); }
+		public int size(){ return list.size(); }
+		public boolean isEmpty(){ return list.isEmpty(); }
+		@Override
+		public String toString(){
+			StringBuilder s = new StringBuilder();
+			Iterator iterator = list.iterator();
+			while(iterator.hasNext()){
+				s.append(iterator.next()+" ");
+			}
+			return s.toString();
+		}
+
+		public static void main(String... args){
+			StackLink<String> stack = new StackLink<>();
+			stack.push("You!");
+			stack.push(" Love ");
+			stack.push("I");
+			stack.pop();
+			if(!stack.isEmpty()){
+				System.out.println("The size of stack:" 
+					+ stack.size());
+			}
+			System.out.println(stack);
+		}
+	}
+{% endhighlight %}
+
+####使用Array数组实现栈
+{% highlight ruby %}
+//使用泛型数组Generic Array很麻烦,所以采用了Object
+1.	import java.util.NoSuchElementException;
+2.	public class ArrayStack implements Stack{
+3.		private Object[] array;
+4.		private  final int capacity; //不能加static
+5.		private int top = -1;
+6.	//Two constructor
+7.		public ArrayStack(){
+8.			this(10);
+9.		}
+10.		
+11.		public ArrayStack(int size){
+12.			array = new Object[size];
+13.			capacity = size; 
+14.		}
+15.		public void push(Object item){
+16.			if(capacity == top+1)
+17.				throw new IllegalStateException("Cannot add to full stack");
+18.			array[++top] = item;
+19.		}
+20.	
+21.		public Object pop(){
+22.			if(top == -1){
+23.				throw new NoSuchElementException("Stack underflow");
+24.			}
+25.			else{
+26.				Object temp = array[top];
+27.				//将移除的元素置空nullify,使GC知道其可回收,
+28.				//防止内存泄漏(memory leak)
+29.				array[top--] = null;
+30.				return temp;
+31.			}
+32.		}
+33.	
+34.		public Object peek(){
+35.			if(top == -1){
+36.				throw new NoSuchElementException("Stack underflow");
+37.			}
+38.			else{
+39.				return array[top];
+40.			}
+41.		}
+42.		public int size(){
+43.			return top + 1;
+44.		}
+45.		public boolean isEmpty(){
+46.			return top == -1;
+47.		}
+48.		@Override
+49.		public String toString(){
+50.			StringBuilder s = new StringBuilder();
+51.			for(int i=top; i>=0; i--){
+52.				s.append(array[i]+" ");
+53.			}
+54.			return s.toString();
+55.		}
+56.		public static void main(String... args){
+57.			ArrayStack aStack = new ArrayStack(10);
+58.			aStack.push("I");
+59.			aStack.push("Me");
+60.			aStack.push("Good");
+61.			aStack.pop();
+62.			aStack.pop();
+63.			if(!aStack.isEmpty())
+64.				System.out.println("The size of the stack: " + aStack.size());
+65.			System.out.println(aStack);
+66.		}
+67.	}
+{% endhighlight %}
 
 ####总结：
 1. 当栈满的时候,继续使用push()时,会引发栈溢出(stack overflow)   
@@ -146,6 +265,26 @@ comment: true
  assert BooleanExpression : errorMessage;   
   如果assert后面的booleanExpression返回值为false, 就会
   抛出一个AssertionError并使程序停止.Debugg.   
-  运行程序时， 需要使用以下格式: java -ea fileName
+  运行程序时， 需要使用以下格式: java -ea fileName     
+4. 重载Override toString()方法时， 使用StringBuilder,而不使用 +   
+  以及遍历LinkedList使用Iterator而不用LinkedList.get()方法   
+  都有效率考虑原因,有空再写文章分析,也可以采用foreach结构.
+5. 应避免使用java.util.Stack 自带的实现,其主要原因是实现Stack   
+使用了Vector, 采用了数组实现。Vector的默认数组大小是10， 
+如果Stack元素个数大于10， 则会双倍扩大数组大小,其间会引发数组的复制,这个过程会消耗一定时间，如果有80个元素，则会在10,20,40,80发生数组复制,复杂度为O(n). Stack的实现没有提供重载能力,不能像Vector那样指定初始数组大小， 也没有能力指定增长策略，所以使用java.util.Stack显得不明智。
+具体解决方法可以参见[Stack][link2]    
+6. 似乎inner class要定义为static,不太清楚, 还有使用array实现的栈可以添加resize方法,等有空继续修改吧。 I feel lucky~~
+<br>
+<br>
+
+####程序的源码：   
+[LinkedStack.java][link]   
+[Stack.java][link1]   
+[StackLink.java][link3]   
+[ArrayStack.java][link4]   
 [Wiki]:http://en.wikipedia.org/wiki/Class_invariant
 [link]: {{ site.url }}/fileStore/LinkedStack.java
+[link2]: http://java.dzone.com/articles/why-future-generations-will
+[link3]: {{ site.url }}/fileStore/StackLink.java
+[link1]: {{ site.url }}/fileStore/Stack.java
+[link4]: {{ site.url }}/fileStore/ArrayStack.java
