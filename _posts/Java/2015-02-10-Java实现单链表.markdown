@@ -55,11 +55,12 @@ category: Java
 34.			head = null;
 35.			size = 0;
 36.		}
-37.		//获取链表的长度
+37.		//获取链表的长度  算法复杂度：O(1)
 38.		public int length(){
 39.			return size;
 40.		}
 41.		//判定链表是否含有某元素  采用equals方法注意adata可能为空
+		//遍历链表  算法复杂度为O(n)
 42.		public boolean isContain(Object adata){ //Notice that the data may be null
 43.			Node temp = head;
 44.			while(temp != null){
@@ -69,7 +70,8 @@ category: Java
 48.			}
 49.			return false;
 50.		}
-51.		//找到某一元素在链表中的索引(reference)
+51.		//找到某一元素在链表中的索引(reference) 
+		//遍历链表 算法复杂度:O(n)
 52.		public Node find(Object adata){
 53.			Node temp = head;
 54.			while(temp != null){
@@ -80,6 +82,7 @@ category: Java
 59.			return null;
 60.		}
 61.		//遍历链表
+		//遍历链表 算法复杂度:O(n)
 62.		public void traverList(){
 63.			Node temp = head;
 64.			while(temp != null){
@@ -89,11 +92,13 @@ category: Java
 68.			System.out.println();
 69.		}
 70.		//添加链表头元素
+		//算法复杂度O(1)
 71.		public void addFirst(Object adata){
 72.			head = new Node(adata, head);
 73.			size ++;
 74.		}
 75.		//删除链表头元素
+		//算法复杂度O(1)
 76.		public Object removeFirst(){     //return only one node, instead of a reference.
 77.			if(head == null)
 78.				return null;
@@ -104,6 +109,7 @@ category: Java
 83.			return temp.getData();
 84.		}
 85.		//添加链表尾元素， 注意链表为空时的处理
+		//遍历链表 算法复杂度:O(n) 添加tail可以达到O(1)
 86.		public void addLast(Object adata){
 87.			Node temp = head;
 88.			Node current = null;
@@ -120,6 +126,7 @@ category: Java
 99.			size ++;
 100.		}
 101.		//移除链表的尾元素， 通过遍历找到倒数第二个元素的索引
+			//遍历链表 算法复杂度:O(n) 使用双链表可达O(1)
 102.		public Object removeLast(){
 103.			Node temp = head;
 104.			Node current = null;		
@@ -139,6 +146,7 @@ category: Java
 118.			return temp.getData();
 119.		}
 120.	       //找到指定元素， 并进行插入
+			//遍历链表  算法复杂度:O(n)
 121.		public boolean findAndInsertAfter(Object target, Object adata){
 122.			Node temp = head;
 123.			while(temp != null){
@@ -184,7 +192,10 @@ category: Java
 	Java泛型的好处：   
 		1. 类型安全。 泛型的一个主要目标就是提高 Java 程序的类型安全。使用泛型可以使编译器知道变量的类型限制，进而可以在更高程度上验证类型假设。如果没有泛型，那么类型的安全性主要由程序员来把握，这显然不如带有泛型的程序安全性高   
 		2. 消除强制类型转换。泛型可以消除源代码中的许多强制类型转换，这样可以使代码更加可读，并减少出错的机会。    
-		3. 性能收益。目前来讲，用 GJ 编写的代码和一般的 Java 代码在效率上是非常接近的。 但是由于泛型会给 Java 编译器和虚拟机带来更多的类型信息，因此利用这些信息对 Java 程序做进一步优化将成为可能   
+		3. 性能收益。目前来讲，用 GJ 编写的代码和一般的 Java 代码在效率上是非常接近的。 但是由于泛型会给 Java 编译器和虚拟机带来更多的类型信息，因此利用这些信息对 Java 程序做进一步优化将成为可能      
+* 最后在每项操作上添加了算法复杂, 大致了解该操作的代价, 这样才能更好选择使用.
+
+
 [question]: http://stackoverflow.com/questions/29349920/implementation-of-removefirst-method-in-slinkedlist-in-java
 [link]: {{ site.url }}/fileStore/SLinkedList.java
 

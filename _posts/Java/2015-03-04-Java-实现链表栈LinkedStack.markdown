@@ -65,7 +65,7 @@ comment: true
 40 	public int size(){
 41 		return size;
 42 	}
-//将元素压进栈
+//将元素压进栈  
 43 	public void push(T item){
 44 		head = new Node<T>(item, head);
 45 		size ++;
@@ -273,7 +273,7 @@ comment: true
 使用了Vector, 采用了数组实现。Vector的默认数组大小是10， 
 如果Stack元素个数大于10， 则会双倍扩大数组大小,其间会引发数组的复制,这个过程会消耗一定时间，如果有80个元素，则会在10,20,40,80发生数组复制,复杂度为O(n). Stack的实现没有提供重载能力,不能像Vector那样指定初始数组大小， 也没有能力指定增长策略，所以使用java.util.Stack显得不明智。
 具体解决方法可以参见[Stack][link2]    
-6. 似乎inner class要定义为static,不太清楚, 还有使用array实现的栈可以添加resize方法,等有空继续修改吧。 I feel lucky~~
+6. 似乎inner class要定义为static,不太清楚, 还有使用array实现的栈可以添加resize方法,实现动态调整数组大小，等有空继续修改吧。 I feel lucky~~
 <br>
 <br>
 

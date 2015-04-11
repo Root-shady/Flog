@@ -242,7 +242,7 @@ LinkedList的具体介绍：[ClickMe][link]
 154 		System.out.println();
 155 	}
 //修改指定学生信息， 用户输入学生index(Console所以做得粗糙)
-//对index进行验证后， 执行相应删除，调用获取合法index方法
+//对index进行验证后， 执行相应修改，调用获取合法index方法
 156 	public void changeInformation(Information list){
 157 		int index = 0;
 158 		if(validIndex(list) != -1){
@@ -344,4 +344,14 @@ LinkedList的具体介绍：[ClickMe][link]
 [link3]:  {{ site.url }}/fileStore/Student.java
 
 ###总结
-1. 
+1. 代码贴了两三天后,想写总结感觉有点懒,所以说打铁要趁热～_～||还有就是一些写代码过程中的想法也不见了。特别是在这两天看到了ArrayList和LinkedList的使用， 觉得这个小程序应该使用ArrayList
+	* 修改学生信息用到set(int index, E element)算法复杂度为O(n)而使用Arrayist set(index, E elemet)可以达到O(1)   
+	* 删除指定学生时， LinkedList使用迭代器进行查找 O(n) ArrayList由于要移动元素算法复杂度也是O(n)    
+	* 查找学生信息, 如果人数多， LinkedList遍历O(n) 而是使用Arraylist() 可以采取相应策略如二分查找降低算法复杂度   
+	* LinkedList 由于使用double-list实现，需要多存储两个指针,会消耗更多的内存。
+
+2. 使用Scanner如何保证从用户那里获取一个整数， 如何处理输入异常， 使用try-catch机制可以较好地处理这问题。    
+3. 遇到重复的代码模块可以将其封装为private私有方法来解决重写代码问题。  
+4. 事实上， 对于LinkedList，Arrayist等Collection没必要记住它的使用， 有需要的话直接查文档， 当然熟悉常用的还是应该的。 不过记不住部分都是情有可原的。 更加重要的是知道什么时候用哪个， 当然， 能够知道其背后的实现原理更好， 这样可以帮你更好地选择。  
+
+
