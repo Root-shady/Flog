@@ -138,11 +138,11 @@ public class DoubleLink<E>{
 		while(temp != null){
 			index ++;
 			if(temp.element.equals(element)){
-				break;
+				return index;
 			}
 			temp = temp.next;
 		}
-		return index;
+		return -1;
 	}
 	public void set(int index, E element){
 		if(index<0 || index>=size)
@@ -182,9 +182,9 @@ public class DoubleLink<E>{
 		DoubleLink<String> dlink = new DoubleLink<>();
 		dlink.addFirst(" To ");
 		dlink.addFirst("Welcome");
-		dlink.addLast(" Here ");
-		dlink.addLast(" Shady");
-		dlink.addLast(" Eric ");
+		dlink.addLast("Here");
+		dlink.addLast("Shady");
+		dlink.addLast("Eric");
 		System.out.println(dlink.iterateForward());
 
 		System.out.println(dlink.iterateBackward());

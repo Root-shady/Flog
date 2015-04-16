@@ -345,8 +345,8 @@ LinkedList的具体介绍：[ClickMe][link]
 
 ###总结
 1. 代码贴了两三天后,想写总结感觉有点懒,所以说打铁要趁热～_～||还有就是一些写代码过程中的想法也不见了。特别是在这两天看到了ArrayList和LinkedList的使用， 觉得这个小程序应该使用ArrayList
-	* 修改学生信息用到set(int index, E element)算法复杂度为O(n)而使用Arrayist set(index, E elemet)可以达到O(1)   
-	* 删除指定学生时， LinkedList使用迭代器进行查找 O(n) ArrayList由于要移动元素算法复杂度也是O(n)    
+	* 修改学生信息用到set(int index, E element)算法时间杂度为O(n)而使用Arrayist set(index, E elemet)可以达到O(1)   
+	* 删除指定学生时， LinkedList使用迭代器进行查找 O(n) ArrayList由于要移动元素算法时间复杂度也是O(n)    
 	* 查找学生信息, 如果人数多， LinkedList遍历O(n) 而是使用Arraylist() 可以采取相应策略如二分查找降低算法复杂度   
 	* LinkedList 由于使用double-list实现，需要多存储两个指针,会消耗更多的内存。
 
