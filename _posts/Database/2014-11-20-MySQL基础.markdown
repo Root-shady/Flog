@@ -23,34 +23,52 @@ I. **如何创建一个无密码用户**
 
     >$mysql -p -u root  
     >$mysql> show databases;   
-    >$mysql> create database test; 
+
   
 II. 创建一个数据库test
 
-    create database databasename;  
+    格式： create database databasename;  
+    mysql> create database test; 
     mysql> show databases;     
-    //查看创建是否成功 注意s 以及最后语句的分号， 所有mysql以“；”表示结束   
-    mysql> select user, host, password from mysql.user;   
+    //查看创建是否成功 注意s 以及最后语句的分号， 默认所有mysql以“；”
+	//表示语句结束      
+   
+    use mysql;
+	//选定使用mysql数据库，mysql为系统自带   
+	mysql> select user, host, password from mysql.user;   
     //查看当前数据库所有用户。  
-    mysql> create user _username_@localhost;   
-    //创建一个新local用户， username为你创建用户名
+   	//创建一个新local用户， username为你创建用户名
     mysql> select user, host, password from mysql.user;   
-    //查看是否创建成功   
+    //查看是否创建成功  
+
     mysql> select user, host from mysql.db;   
     //不会出现前面刚创建的用户名  
+	//mysql.db是用来储存数据库中关于GRANTS的信息.
+	//也就是说如果你对新的user使用了grant语句,则该user会出现
+	//在mysql.db
+
+关于上面的mysql.db问题:[StackOverflow][link];
+
     mysql> grant all on test.* to _username_@localhost;   
     //把前面新建的数据库的所有权限赋给username  
     mysql> select user, host from mysql.db;   
-    //出现前面创建的username **原因不清。。.**  
+    //出现前面创建的username 
+	
+	mysql> select current_user();
+	//忘记自己是谁。。。使用上面语句查看
+	//没有google到如何不退出mysql切换用户
 
-  测试创建的用户是否成功。  
-    
-    $mysql -u uername
+  	测试创建的用户是否成功。  
+    $mysql -u username
     //这里没有-p选项因为前面创建的是没有密码的用户
 
-II.  **创建一个有密码用户**    
+II.  **创建删除一个有密码用户**    
+
     mysql> create user username@localhost identified by 'password';  
-    //同样可以使用上面的语句对创建状态进行查看， 和赋予相应数据库的权限。    
+    //同样可以使用上面的语句对创建状态进行查看， 和赋予相应数据库的权限。
+
+	mysql> drop user username@localhost;
+	//删除创建的用户   
 
 III.  **数据库授权**  
     (1). 创建一个超级权限用户。 
@@ -59,13 +77,27 @@ III.  **数据库授权**
     //进入root用户  
 
     mysql> grant all on *.* to username@localhost;  
+	mysql> grant 
     //把所有数据库的所有权限赋予给用户username；     
     
   (2). 创建一个较小权限用户      
-    
- mysql> grant select on somedb.* to restrited@localhost;   
-    //把查看(select)某一数据库(somedb)的权限赋予restrited用户  
-    
-IV. To be continue... 
 
+ 	mysql> grant select on somedb.* to restrited@localhost;   
+    //把查看(select)某一数据库(somedb)的权限赋予restrited用户 
 
+III. 如何修改表名
+	
+    RENAME TABLE tab_name TO new_tab_name
+	[,tb1_name TO new_tab1_name2,]...
+	//将player 改为 Player
+	>mysql RENAME TABLE player TO Player;
+
+IV. update过程出现的问题
+	
+如果使用update语句，或其delete语句， 如果在where条件中没有使用到对应的primary key的相关条件.
+则会出现报错，错误信息： You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column。   
+	解决这问题的办法是修改sql_safe_update的模式,默认设置为1，可通过以下指令修改为0.
+	set sql\_safe\_update = 0;   
+再次修改则不会出现错误。
+
+[link]: http://dba.stackexchange.com/questions/13327/what-is-the-mysql-db-table-used-for?newreg=e93781589e2141dbb03c821cd5055d6f#comment20172_13327
