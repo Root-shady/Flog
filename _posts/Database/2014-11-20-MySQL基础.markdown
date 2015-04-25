@@ -37,6 +37,7 @@ II. 创建一个数据库test
 	//选定使用mysql数据库，mysql为系统自带   
 	mysql> select user, host, password from mysql.user;   
     //查看当前数据库所有用户。  
+	mysql> create user eric@localhost;
    	//创建一个新local用户， username为你创建用户名
     mysql> select user, host, password from mysql.user;   
     //查看是否创建成功  
@@ -69,6 +70,9 @@ II.  **创建删除一个有密码用户**
 
 	mysql> drop user username@localhost;
 	//删除创建的用户   
+	为没密码的用户设置密码或则重置密码    
+	SET PASSWORD FOR 'eirc'@'localhost' = PASSWORD('mypass');
+	注意密码部分应该使用单引号，或双引号  
 
 III.  **数据库授权**  
     (1). 创建一个超级权限用户。 
