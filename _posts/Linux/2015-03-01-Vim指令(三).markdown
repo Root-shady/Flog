@@ -1,0 +1,28 @@
+---
+layout: post
+title: Vim指令(三)
+category: Linux
+date: 2015-03-01
+comment: true
+---
+<p>记录部分Vim指令， 作为笔记用<p>
+
+1. 在Vim中如何撤销修改和恢复修改(Undo and Redo)
+	Undo change 在Command Mode下面使用 U
+	Redo change 在CommandMode 下面使用Ctrl+r
+事实上文本编辑器的undo 和 redo 实现机制是采用栈(FIFO)
+
+2. Vim中的大小写转换   
+  * ~ 将光标所在字符交互转换,即大写变小写,小写变大写.(toggle)   
+  * 单词大小写转换,光标定位到该单词   
+  	g~iw   #这里的i表示inner,光标定位在该单词的任何位置即可.	
+    g~3w   #将光标后的三个词转换,光标需处于单词首
+  * 将当前行转换   
+     g~~ #将当前行相互转换
+	 gUU #将当前行转换为大写
+	 guu #将当前行转换为小写
+
+
+
+
+

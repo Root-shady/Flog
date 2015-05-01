@@ -17,6 +17,10 @@ comment: true
 3. T peek() 返回栈顶元素,不对栈顶元素做删除操作      
 4. boolean isEmpty() 栈是否为空      
 
+####栈的应用场景    
+1. 文本编辑器的Undo 和 Redo
+2. 浏览器中的前进、返回, URL
+
 ####使用链表代码实现：    
 
 {% highlight ruby %}
@@ -186,7 +190,7 @@ comment: true
 1.	import java.util.NoSuchElementException;
 2.	public class ArrayStack implements Stack{
 3.		private Object[] array;
-4.		private  final int capacity; //不能加static
+4.		private  final int capacity; 
 5.		private int top = -1;
 6.	//Two constructor
 7.		public ArrayStack(){

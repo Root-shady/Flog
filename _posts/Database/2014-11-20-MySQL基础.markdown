@@ -57,6 +57,8 @@ II. 创建一个数据库test
 	
 	mysql> select current_user();
 	//忘记自己是谁。。。使用上面语句查看
+	mysql> select current_user;
+	//使用系统变量， 为了和其它DBMS一致， 部分系统变量无需添加@@
 	//没有google到如何不退出mysql切换用户
 
   	测试创建的用户是否成功。  
