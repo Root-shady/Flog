@@ -34,11 +34,27 @@ category: Linux
 		-df表示--directory --force表示删除当前目录下的所有没记录的文件和文件夹
 
 ####如何删除文件和恢复文件   
-1.在当前的工作区删除文件
+
+1. 恢复删除的文件
+注意在这里的文件状态可使用git status 查看       
 * 通常在Terminal下删除文件都是直接使用rm 并且删除是不可恢复的    
-   在git local repository 使用了 rm filename
-   这时修改还没有提交到staged area缓存区,所以可以使用下面的语句将文件从缓存区恢复。
-   git checkout -- filename  将staged area中的文件取回来,这和上面的
+   在git local repository 使用了 rm filename     
+   这时修改还没有提交到staged area缓存区,所以可以使用下面的语句将文件从缓存区恢复。    
+   git checkout -- filename  将staged area中的文件取回来,这和上面的撤销工作区的修改一样
+   可以理解为cp指令,如果工作区存在则覆盖,不存在则创建    
+* 如果直接使用git rm filename删除文件,则此时已经将删除提交到staged area
+  将删除的文件提交到staged area也需要这条指令。    
+  可以使用下面的指令将已经提交到statged area的删除文件恢复.    
+  git reset HEAD filename
+  这条命令会将文件恢复到staged area.   
+  则此时使用上面的步骤,可以将文件恢复到工作区.  
+  git checkout -- filename
+* 如果删除文件,并已经提交了commit  
+  如果除了删除文件外,没有其它的修改,则可以直接利用git的回溯功能,返回上一个commit point.      
+  git reset HEAD^ --hard     
+  如果期间还修改了其它文件,只想恢复删除的文件,而且保存修改的文件内容,那么可以使用下面的指令.    
+  git reset HEAD^ filename   
+  
 ####学习链接    
 1. [高效利用GitHub][link1]   
 2. [git 简明指南][link2]   
