@@ -22,7 +22,7 @@ comment: true
 	 gUU #将当前行转换为大写
 	 guu #将当前行转换为小写
 
-
-
-
-
+3. shortcuts for better efficience.
+  * gi  跳回到上一次编辑的地方,并进入insert模式  
+  * Ctrl-c 可以代替Esc退出insert模式,更加容易编辑.
+  *

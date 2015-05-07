@@ -33,6 +33,12 @@ category: Linux
 		git clean -df     
 		-df表示--directory --force表示删除当前目录下的所有没记录的文件和文件夹
 
+####如何删除文件和恢复文件   
+1.在当前的工作区删除文件
+* 通常在Terminal下删除文件都是直接使用rm 并且删除是不可恢复的    
+   在git local repository 使用了 rm filename
+   这时修改还没有提交到staged area缓存区,所以可以使用下面的语句将文件从缓存区恢复。
+   git checkout -- filename  将staged area中的文件取回来,这和上面的
 ####学习链接    
 1. [高效利用GitHub][link1]   
 2. [git 简明指南][link2]   

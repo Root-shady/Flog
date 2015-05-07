@@ -5,7 +5,7 @@ category: Linux
 date: 2015-03-08
 comment: true
 ---
-<p class="intro"><span style="dropcap"></span><p>
+   <p class="intro"><span style="dropcap">U</spa>nix was not designed to stop its users from doing stupid things, as that would also stop them from doing clever things.<p>
 <p style="text-indent: 50px;"></p>
 <p style="text-indent: 50px;"></p>
 <p style="text-indent: 50px;"></p>
