@@ -260,24 +260,26 @@ comment: true
 1. 当栈满的时候,继续使用push()时,会引发栈溢出(stack overflow)   
    当栈空的时候,继续使用pop()时, 会引发堆栈下溢(stack underflow)    
    两者都有可能引发程序崩溃, 所以要做好相应检测.    
-2. 类中的不变式(class invariant)    
+2. 上面使用数组实现的栈实现,允许用户指定栈的大小,但是这种方法不够灵活,不能实现栈的动态增长,一旦栈中元素大于所声明的栈大小,将会出现错误. 而对于Arrayist,则会根据需求动态增长,下次在改进栈的数组实现哦。     
+3. 上面通过使用已经实现的LinkedList来实现栈,这是设计模式中的适配器Adapter模式, 修改存在的类去适配另一个类或者接口(interface). 通常的做法是在新定义的类中用存在的类实例化出一个私有对象,通过使用存在的类的方法,实现新的类的方法。   
+4. 类中的不变式(class invariant)    
    类中的check()方法目的就是保证类的不变式.保证类中数据的关系,比如上面代码中size和链表中的实际元素个数应该是一致. 如果链表上有3个元素,而size=4, 那么就出问题了。通过check()方法的检测, 可以有效减少这种错误.不变式能体现一个对象的表示何时良好何时不好.   
    In computer Programming, specifically object-oriented programming, a class invariant is an invariant used to constrain objects of a class. Methods of the class should preserve the invariant. The class invariant constraint the state stored in the object.
    [Class Invariant][Wiki]   
-3. assert的使用   
+5. assert的使用   
  assert booleanExpression;   
  assert BooleanExpression : errorMessage;   
   如果assert后面的booleanExpression返回值为false, 就会
   抛出一个AssertionError并使程序停止.Debugg.   
   运行程序时， 需要使用以下格式: java -ea fileName     
-4. 重载Override toString()方法时， 使用StringBuilder,而不使用 +   
+6. 重载Override toString()方法时， 使用StringBuilder,而不使用 +   
   以及遍历LinkedList使用Iterator而不用LinkedList.get()方法   
   都有效率考虑原因,有空再写文章分析,也可以采用foreach结构.
-5. 应避免使用java.util.Stack 自带的实现,其主要原因是实现Stack   
+7. 应避免使用java.util.Stack 自带的实现,其主要原因是实现Stack   
 使用了Vector, 采用了数组实现。Vector的默认数组大小是10， 
-如果Stack元素个数大于10， 则会双倍扩大数组大小,其间会引发数组的复制,这个过程会消耗一定时间，如果有80个元素，则会在10,20,40,80发生数组复制,复杂度为O(n). Stack的实现没有提供重载能力,不能像Vector那样指定初始数组大小， 也没有能力指定增长策略，所以使用java.util.Stack显得不明智。
+如果Stack元素个数大于10， 则会双倍扩大数组大小,其间会引发数组的复制,这个过程会消耗一定时间，如果有80个元素，则会在10,20,40,80发生数组复制,复杂度为O(n). Stack的实现没有提供重载能力,不能像Vector那样指定初始数组大小， 也没有能力指定增长策略，所以使用java.util.Stack显得不明智。可以使用ArrayQueue代替,官方文档也是这么推荐.
 具体解决方法可以参见[Stack][link2]    
-6. 似乎inner class要定义为static,不太清楚, 还有使用array实现的栈可以添加resize方法,实现动态调整数组大小，等有空继续修改吧。 I feel lucky~~
+8. 似乎inner class要定义为static,不太清楚, 还有使用array实现的栈可以添加resize方法,实现动态调整数组大小，等有空继续修改吧。 I feel lucky~~
 <br>
 <br>
 

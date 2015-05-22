@@ -14,7 +14,9 @@ category: Linux
  <Blockquote> Git commands are just graph manipulation command--create/delete nodes. moving pointer around.</Blockquote>
  <figure>
  <img src="{{ site.url }}/assets/img/gitworkflow.png" alt="">
-<figcaption>Fig1.Git Workingflow Source: InternetPost</figcaption>
+<figcaption>Fig1.Git-Branching-Model     
+    Author: Vincent Driessen     
+    License: Creative Commons BY-SA</figcaption>
  </figure>
 
 <p style="text-indent: 50px;"> 这篇文章主要用于记录我使用git过程中用到的命令,觉得有意思的就会记录,关于git的学习有很多资料,有兴趣可以看下面的链接.事实上， 我的博客就是在github上托管的,基于Git、GitHub、Markdown与Jekyll,并绑定了自定义域名.</p>

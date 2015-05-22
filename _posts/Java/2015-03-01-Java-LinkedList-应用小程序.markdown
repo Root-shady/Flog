@@ -348,7 +348,7 @@ LinkedList的具体介绍：[ClickMe][link]
 	* 修改学生信息用到set(int index, E element)算法时间杂度为O(n)而使用Arrayist set(index, E elemet)可以达到O(1)   
 	* 删除指定学生时， LinkedList使用迭代器进行查找 O(n) ArrayList由于要移动元素算法时间复杂度也是O(n)    
 	* 查找学生信息, 如果人数多， LinkedList遍历O(n) 而是使用Arraylist() 可以采取相应策略如二分查找降低算法复杂度   
-	* LinkedList 由于使用double-list实现，需要多存储两个指针,会消耗更多的内存。
+	* LinkedList 由于使用double-list实现，需要多存储两个指针,会消耗更多的内存。同时， 对链表的操作涉及更多的基础操作,比如新建节点,修改节点指向,这些导致了linked-list相比Array-base的方法代价更大.
 
 2. 使用Scanner如何保证从用户那里获取一个整数， 如何处理输入异常， 使用try-catch机制可以较好地处理这问题。    
 3. 遇到重复的代码模块可以将其封装为private私有方法来解决重写代码问题。  
