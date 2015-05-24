@@ -8,7 +8,7 @@ permalink: blog/:title/
 
 markdown: redcarpet
 pygments: true
-paginate: 5
+paginate: 8
 
 categories: ['Database','Linux','LifeHacking','Java']
 navigation:

@@ -5,7 +5,34 @@ category: Linux
 date: 2015-03-08
 comment: true
 ---
-   <p class="intro"><span style="dropcap">U</span>nix was not designed to stop its users from doing stupid things, as that would also stop them from doing clever things.<p>
+   <p class="intro"><span class="dropcap">U</span>nix was not designed to stop its users from doing stupid things, as that would also stop them from doing clever things.</p>
+
+####copy/paste in shell command
+1. 如何删除正在编辑的命令   
+ * Ctrl-U  删除从当前行头开始到光标所在处   
+ * Ctrl-K  删除从光标开始到当前行结束    
+ * 可以使用方向键的向下删除整行内容   
+2. 粘贴所删除的命令    
+ * Ctrl-Y  在当前光标处粘贴    
+  在linux中copy/paste 以前称为 kill/yank    
+    
+3. 外部 复制/粘贴内容到shell    
+ *  Ctrl-Shift-C  
+ 使用光标选定复制内容,使用ctrl-shift-c    
+ *  Ctrl-Shift-V  在当前光标处粘贴    
+4. 快速跳跃    
+ * Ctrl-A  跳到当前编辑行的开头   
+ * Ctrl-E  跳到当前编辑行的末尾    
+
+####常用快捷键   
+*  清屏  
+    Ctrl-L 效果和clear一样   
+* 结束当前运行进程
+    Ctrl-C
+* 自动补全命令  
+    Tab 
+    
+
 <p style="text-indent: 50px;"></p>
 <p style="text-indent: 50px;"></p>
 <p style="text-indent: 50px;"></p>

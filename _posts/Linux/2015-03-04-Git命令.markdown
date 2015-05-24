@@ -19,19 +19,27 @@ category: Linux
     License: Creative Commons BY-SA</figcaption>
  </figure>
 
-<p style="text-indent: 50px;"> 这篇文章主要用于记录我使用git过程中用到的命令,觉得有意思的就会记录,关于git的学习有很多资料,有兴趣可以看下面的链接.事实上， 我的博客就是在github上托管的,基于Git、GitHub、Markdown与Jekyll,并绑定了自定义域名.</p>
+<p style="text-indent: 50px;"> 这篇文章主要用于记录我学习git过程中用到的命令,觉得有意思的就会记录,关于git的学习有很多资料,有兴趣可以看下面的链接.事实上， 我的博客就是在github上托管的,基于Git、GitHub、Markdown与Jekyll,并绑定了自定义域名.</p>
 ####如何撤销工作区的文件修改
 
 (注意,git的状态可以使用git status 查看)    
-1. 撤销还没加入暂存区(staging area)的文件修改    
-    
-*  撤销指定文件的修改    
+
+1. 介绍如何使用diff命令找出修改的文件
+    * 对比工作区和暂存区的文件不同   
+        git diff   使用这条命令会输出工作区和暂存区中所有文件的修改
+        git diff filename  可以在命令后指定对比的文件名   
+    * 对比缓存区中文件与仓库中文件的区别  
+        git diff --staged 对比所有文件不同   
+        git diff --staged filename 指定文件名对比 
+      
+2. 撤销还没加入暂存区(staging area)的文件修改
+    *  撤销指定文件的修改    
 		git checkout -- filename.txt(注意--和文件名间的空格)    
 		事实上, *--*可以省略, 不过容易和切换分支搞混,     
 		git checkout branchName 所以最好还是加上*--*     
-*  撤销所有工作区的修改    
+    *  撤销所有工作区的修改    
 	    git checkout *    
-* 如何删除新添加的文件(untracked file)    
+    * 如何删除新添加的文件(untracked file)    
 	    只有当文件比较多时,才会需要使用到下面的指令。    
    	    git clean -i    
 	    -i表示 --interactive会弹出对应菜单让你选择    
@@ -42,10 +50,16 @@ category: Linux
 		git clean -df     
 		-df表示--directory --force表示删除当前目录下的所有没记录的文件和文件夹
 
+3. 撤销已经加入暂存区的文件
+    * git reset filename   
+         将修改撤销到工作区， 也就是将原先加入到暂存区中的文件拉回工作区
+         现在就可以重复上面2操作， 选择撤销工作区的文件修改。    
+
 ####如何删除文件和恢复文件   
 
 1. 恢复删除的文件
 注意在这里的文件状态可使用git status 查看       
+
 * 通常在Terminal下删除文件都是直接使用rm 并且删除是不可恢复的    
    在git local repository 使用了 rm filename     
    这时修改还没有提交到staged area缓存区,所以可以使用下面的语句将文件从缓存区恢复。    
@@ -63,6 +77,8 @@ category: Linux
   git reset HEAD^ --hard     
   如果期间还修改了其它文件,只想恢复删除的文件,而且保存修改的文件内容,那么可以使用下面的指令.    
   git reset HEAD^ filename   
+
+####
   
 ####学习链接    
 1. [高效利用GitHub][link1]   
