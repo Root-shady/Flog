@@ -88,7 +88,7 @@ III.  **数据库授权**
     
   (2). 创建一个较小权限用户      
 
- 	mysql> grant select on somedb.* to restrited@localhost;   
+ 	mysql> grant select on somedb.\* to restrited@localhost;   
     //把查看(select)某一数据库(somedb)的权限赋予restrited用户 
 
 III. 如何修改表名
@@ -104,6 +104,30 @@ IV. update过程出现的问题
 则会出现报错，错误信息： You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column。   
 	解决这问题的办法是修改sql_safe_update的模式,默认设置为1，可通过以下指令修改为0.
 	set sql\_safe\_update = 0;   
-再次修改则不会出现错误。
+再次修改则不会出现错误， 这里只是修改了session的变量。    
+
+事实上使用safe-update 模式比较保险,能够避免误删数据库数据.   
+在CLI下默认mysql 的safwe-updates 是关闭的， 如何设置打开呢。    
+
+1. 找到系统中的mysql configuration配置文件       
+  在Ubuntu下, 通常是/etc/mysql/my.cof    
+
+2. 使用su - 获取管理员权限    
+
+3. 增加一个全局变量,自动打开safe-updates     
+    [mysql]    
+    safe-updates   
+
+有时候在命令行下执行query返回的结果不只整个屏幕。
+为了方便查看， 可以引入pager 对查询结果进行分页显示 
+可以使用下面命令设置：      
+   当前session： pager less      
+   你也可以选择使用more      
+设置为默认    
+    打开my.cof mysql配置文件    
+    加入下面语句   
+       [client]    
+       pager less
+
 
 [link]: http://dba.stackexchange.com/questions/13327/what-is-the-mysql-db-table-used-for?newreg=e93781589e2141dbb03c821cd5055d6f#comment20172_13327
