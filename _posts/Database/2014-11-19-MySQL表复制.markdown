@@ -18,6 +18,9 @@ category: Database
     2. 第二步 复制目标表的数据到创建的新表    
     > mysql> insert into NewTableName select * from TargetTable;   
     //把每一项数据插入到新表中    
+
+    这种复制方法能够同步复制原表格的index, foreign key.     
+
     
 ####实例：
     1. 查看表的结构（Structure）    
