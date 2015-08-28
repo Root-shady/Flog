@@ -68,7 +68,7 @@ comment: true
     Origin: Ubuntu
     Supported: 5y
     Task: minimal>>)
-{% end highlight %}
+{% endhighlight %}
 可以查看package的基本信息， 同时还能使用MD5sum对软件数据一致性进行检查.    
 可以使用下面命令进行模拟安装.
 apt-get -s install <package>
