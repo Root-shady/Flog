@@ -1,0 +1,108 @@
+---
+layout: post
+title: 'MySQL权限'
+date: '2014-11-20'
+category: Database
+comment: true
+---
+<p></p>
+###mysql数据备份    
+
+首先是文件命名的小技巧：       
+  Linux下使用date命令获取当前日期作为文件名   
+    
+    Example:    
+    $ touch `date +"%Y-%m-%d"`.Backup.sql
+    # date后面跟着的是格式符  
+    # %Y 表示4位的年份   
+    # %m (月份0..12)   
+    # %d (日0..31)
+    # %H (小时0..23)
+
+具体可以看这里的链接[ClickMe][link]    
+注意这里的`符号不是单引号,而是和ESC一起的符号    
+同时在date后面的+号要有一个空格   
+      
+####数据库冷备份  
+数据库冷备份就是直接对数据库数据文件进行备份,保证数据库能够恢复到特定的时间点。    
+
+1. 找到数据库数据文件位置  
+   在mysql中使用下面指令：   
+   show variables like '%dir%'     
+   定位到datadir就是系统中数据库数据文件位置。     
+   linux下通常是/var/lib/mysql     
+
+2.  为了保证数据的一致性, 防止备份时有其它用户在操作数据库， 需要先关闭数据库服务器    
+   在linux(Ubuntu)下使用下面指令关闭    
+   sudo stop mysql    
+
+3. 采用压缩工具对数据文件进行复制压缩    
+
+    tar zcf /tmp/`date +"%Y.%m.%d.%H.%M"`.MySQL_Backup.tgz /var/lib/mysql
+
+  上面的指令将mysql文件夹进行打包压缩， 存放到/tmp目录下(命名规则看上面)
+
+4.  恢复数据时只要将压缩文件解压并放回原先目录即可 
+   重新开启数据库服务器
+   sudo start mysql
+ 总结： 由于备份时需要关闭数据库服务器，并且只能完整备份， 所以不是很实用。 
+
+####利用mysqlhotcopy进行复制   
+条件： 数据库中的表格式应该是MyISAM格式(Engine)     
+
+1. 复制的格式是binary format也就是数据库数据文件(类似冷备份,不过无需关闭数据库服务器,mysqlhotcopy会先将tables锁住,阻止其它用户对其操作， 保证数据的一致性，然后flush table将数据修改保存到数据库数据文件,然后进行文件复制,完成备份 )   
+    
+    mysqlhotcopy --user=root --password=the_mysql_root_password music /home/user/Documents
+    Locked 4 tables in 0 seconds.
+    Flushed tables (`music`.`album`, `music`.`artist`, `music`.`played`, `music`.`track`)
+    in 0 seconds.
+    Copying 13 files...
+    Copying indices for 0 files...
+    Unlocked tables.
+    mysqlhotcopy copied 4 tables (13 files) in 1 second (1 seconds overall).
+
+用户名和密码， 后面指定要备份的数据库,和备份数据文件存放的路径,同样， 有很多参数选项可以添加， 进行设置。    
+
+2. 恢复时， 先关闭数据库服务器，将文件复制到数据库数据目录/var/lib/mysql 开启数据库服务器  
+
+####利用mysqldump进行备份   
+  mysqldump所产生的备份文件是sql语句， 可用来重新构建数据库的sql文件.由于文件里面存储的是文本格式， 所以可以实现高度压缩，同时允许指定备份的粒度,无需完整备份.    
+ mysqldump可以有很多参数设置(options),让你高度自由控制备份的方式，使用mysqldump时有默认的参数设置， 基本上能满足大部分情况.(in most case)下面通过几个例子来看如何使用mysqldump    
+ 
+1. 备份服务器上所有数据库      
+  mysqldump --user=root --password=password \
+  --result-file=music.sql music    
+    上面的--result-file 选项用于指定目标文件的路径和文件名       
+    也可以使用linux的管道机制，忽略--result-file option     
+    mysqldump --user=root --password=password \
+    --all-databases > file.sql
+
+2. 备份指定数据库(使用--datbases选项)
+   mysqldump --user=root --password=password \
+   --result-file=outputfile.sql --databases database_name
+  备份多个指定数据库时， 可以直接在后面添加多个数据库名，当然生成数据库的sql语句文件会在同一个文件中      
+
+3. 备份指定的某个数据库table(直接指定数据库明后面跟上表名)   
+  mysqldump --user=root --password=password \
+  --result-file=outputfile.sql database_name table_name    
+
+4. 备份特定的数据  
+  mysqldump --user=root --password=password \
+  --result-file=outputfile.sql database_name table_name where=artistname like "%Moroh%"
+   使用where语句对数据库的数据进行选择   
+
+5. 如何恢复数据
+  * 在mysql中使用source语句   
+  source 文件路径+文件名   
+  source /tmp/file.sql   
+  * 在shell下使用文件   
+  $ mysql --user=root --password=password < file.sql   
+  建议使用source方法,可以看见sql语句执行过程,比如出现错误或在警告   
+  同时可能sql文件中没有create database语句 或者没有use语句, 在mysql中使用source可以事先指定好数据库。    
+
+
+
+   通常情况下，   
+1. 备份服务器上的所有文件    
+2. 指定备份的数据库
+[link]: http://www.cyberciti.biz/tips/shell-scripting-creating-reportlog-file-names-with-date-in-filename.html

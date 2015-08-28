@@ -31,7 +31,48 @@ comment: true
     Ctrl-C
 * 自动补全命令  
     Tab 
+
+####在安装package前 如何查看package信息
+1. 使用 apt-cache show <package>
     
+    shady@ubuntu:Piece$ apt-cache show python3
+    Package: python3
+    Priority: important
+    Section: python
+    Installed-Size: 100
+    Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+    Original-Maintainer: Matthias Klose <doko@debian.org>
+    Architecture: amd64
+    Source: python3-defaults
+    Version: 3.4.0-0ubuntu2
+    Replaces: python3-minimal (<< 3.1.2-2)
+    Provides: python3-profiler
+    Depends: python3.4 (>= 3.4.0-0~), python3-minimal (= 3.4.0-0ubuntu2), libpython3-stdlib (= 3.4.0-0ubuntu2), dh-python
+    Suggests: python3-doc (>= 3.4.0-0ubuntu2), python3-tk (>= 3.4.0-0ubuntu2)
+    Filename: pool/main/p/python3-defaults/python3_3.4.0-0ubuntu2_amd64.deb
+    Size: 8666
+    MD5sum: bfb7da0b87a977d7c8810d41aa151ba0
+    SHA1: 63e38e68c45e194311ee68d9d81cb900283f4c5b
+    SHA256: e1856a097784129b4a52c31c348fadd4eb82097762bcd652179946ebfab4592b
+    Description-en: interactive high-level object-oriented language (default python3 version)
+    Python, the high-level, interactive object oriented language,
+    includes an extensive class library with lots of goodies for
+    network programming, system administration, sounds and graphics.
+    .
+    This package is a dependency package, which depends on Debian's default
+    Python 3 version (currently v3.4).
+    Description-md5: d2d5b9ee5047a791224f1b8f4bc73d3b
+    Multi-Arch: allowed
+    Homepage: http://www.python.org/
+    Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+    Origin: Ubuntu
+    Supported: 5y
+    Task: minimal>>)
+
+可以查看package的基本信息， 同时还能使用MD5sum对软件数据一致性进行检查.    
+可以使用下面命令进行模拟安装.
+apt-get -s install <package>
+-s 表示simulation 模拟的仿真的,不对系统产生影响.
 
 <p style="text-indent: 50px;"></p>
 <p style="text-indent: 50px;"></p>
