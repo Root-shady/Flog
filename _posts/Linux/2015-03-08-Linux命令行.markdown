@@ -31,6 +31,16 @@ comment: true
     Ctrl-C
 * 自动补全命令  
     Tab 
+* 跳回原先文件路径   
+  cd -    
+  #该指令会跳回系统环境变量OLD\_PATH保存的值    
+  #即原先工作的文件路径       
+* 记录多个文件路径(类是堆栈)    
+  pushd ~/new/path    
+  popd    
+  #使用pushd会记录下当前路径 并跳转到后面的指定路径    
+  #使用popd会弹出栈顶的路径，并修改当前路径到该路径   
+    
 
 ####在安装package前 如何查看package信息
 1. 使用 apt-cache show <package>

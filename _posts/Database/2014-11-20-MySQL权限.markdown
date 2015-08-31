@@ -38,7 +38,7 @@ comment: true
 
 3. 采用压缩工具对数据文件进行复制压缩    
 
-    tar zcf /tmp/`date +"%Y.%m.%d.%H.%M"`.MySQL_Backup.tgz /var/lib/mysql
+    tar -zcf /tmp/`date +"%Y.%m.%d.%H.%M"`.MySQL_Backup.tgz /var/lib/mysql
 
   上面的指令将mysql文件夹进行打包压缩， 存放到/tmp目录下(命名规则看上面)
 

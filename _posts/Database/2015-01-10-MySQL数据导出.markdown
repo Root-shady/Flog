@@ -1,0 +1,63 @@
+---
+layout: post
+date: 2015-01-10
+category: Database
+title: MySQL数据导出
+comment: true
+---
+#### 常见的MySQL内置函数    
+select database()  
+select current\_time()  
+select current\_date()    
+select version()    
+select now()  日期时间    
+select user()
+
+#### 如何导入外部SQL文件
+1.在MySQL里面 使用语句source,后面指定文件名(绝对路径或相对路径)    
+    mysql> source /home/user/full/path/name.sql 
+     
+2.未登录MySQL， 在shell下直接导入     
+   shell\_prompt$ mysql databasename \< /home/user/full/path/name    
+   这里记得提供登录mysql的相关参数，例如：     
+   shell\_prompt$ mysql -u username -p database     
+   -u 指定后面跟的是 user 用户名     
+   -p 指定要输入密码 password    
+   -h 指定连接的服务器 host     
+
+   这里分享一个小技巧， 通过将mysql的参数写入 /etc/mysql/my.cnf这样练习时就不同用重复输入参数,当然这样做会有安全性问题, 下面是我的配置文件.    
+{% highlight ruby %}
+   [mysql]
+   #auto-complete自动补全命令
+   auto-rehash
+  #防止误删文件   采用安全更性
+   safe_updates
+   user=shady
+   password=yougotme
+   #当输出超过屏幕，自动采用vertical输出
+   auto-vertical-output
+{% endhighlight%}
+3.利用shell的管道功能   
+  shell\_prompt$ cat filename.sql | mysql databasename
+
+#### 从MySQL导出数据   
+1.导出HTML格式   
+$ mysql -H -e 'select * from mysql.user' > outputfile.html    
+-H 表示 htnl格式输出   
+-e 表示执行 无需进入mysql客户端中 直接在shell上调用    
+\> 是Linux的重定向符,表示结果保存到指定文件中  
+当不需要输出表头时， 可以加入参数  
+--skip-column-names  不会将表格表头输出   
+-N 和前面的参数同一个功能    
+
+2.导出XML格式    
+$ mysql -X -e 'select user, host, password from mysql.user' > file.xml        
+-X 表示输出格式为XML  
+
+3.采用Linux数据处理工具,得到合适的输出格式  
+Linux下有 tr、sed 等工具可以使用    
+% mysql databasename < inputfile | tr "\011" ":" > output\_file    
+上面的命令 从inputfile读入指令， 后通过Linux的文件流, 采用tr工具将原先的Tab制表符替换为":" 后输出到output\_file中   
+
+
+
