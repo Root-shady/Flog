@@ -1,0 +1,70 @@
+---
+title: Server 配置
+date: 2015-06-20
+layout: post
+category: Linux
+comment: true
+---
+<p class="intro"><span class="dropcap">S</span>erver: A server is both a running instance of some software that is capable of accepting requests from clients, and the computer that executes such software.  翻译为服务器事实是不怎么合适的， server指的是能够接受请求并提供服务的介质。 本文讲一下如何如何申请阿里云服务器ECS， 以及如何进行初步管理， 以搭建Django开发环境为主.</p>
+    
+####申请主机主要流程(具体看官方网站)   
+  1. 注册阿里云帐号  
+  2. 完成实名认证(使用支付宝实名认证即可)
+      巨头的优势
+  3. 申请免费15天使用的云服务器(我使用的是Ubuntu server14.04)
+  4. 找到云服务器(实例)管理面板(默认登录名是root),修改登录密码， 过程需要手机验证码验证
+ 
+
+#### 配置ssh登录  
+  1. 使用ssh登录   
+        SSH是一种网络协议，用于计算机之间的加密登录 下面使用Linux shell 登录， windows可以使用putty， 或者powershell登录    
+        $ ssh username@125.34.23.252    
+        输入密码即可登录远程服务器    
+        指定端口登录 -p    
+        $ ssh -p 2322 username@ip_address    
+
+  2. 添加ssh公钥认登录    
+      每次填写密码太麻烦， 可以配置ssh公钥认证.原理是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录，不再要求密码。    
+    (1).  本地生成一对密匙， 一个密钥(id_rsa)一个公钥(id_rsa.pub)    
+        $ ssh-keygen    
+        期间可以设置一个密码， 保护密钥的安全， 如果别人得到你电脑使用ssh登录会要求输入这个密码， 缺点是你每次登录也需要输入密码. 可以设置为空.     
+    (2). 将生成的公钥推送到目的远程服务器上    
+        $ ssh-copy-id user@host     
+    (3). 成功后使用下面命令尝试登录      
+        $ ssh username@host    
+    (4). 为了让服务器更加安全， 可以禁止远程服务器密码验证登录     
+        找到 /etc/ssh/sshd_config    
+        PasswordAuthentication yes    
+        修改为no，这样在其他shell使用密码登录会出现下面提醒:    
+        Warning: Permanently added '120.23.71.102' (ECDSA) to the list of known hosts.  Permission denied (publickey).    
+
+#### 为系统添加新用户    
+  阿里云服务器默认的用户只用root,在服务器管理上使用root帐号比较有风险,可以添加另外一个帐号,并将其添加到sudoers中,当需要使用超级管理权限时,使用sudo命令前缀执行. 下面列出具体做法,以Ubuntu Server为例.   
+1. 创建新用户     
+(1). 为系统添加一个新用户    
+    # useradd -m username    
+        -m 的意思是为新用户创建一个Home direcotry, 默认为用户名,例如 /home/username      
+(2). 为新用户设置密码     
+    # passwd username    
+(3). 查看是否创建成功      
+    # cat /etc/passwd | grep 'username'    
+    如果能看到该用户的相关信息,则创建成功.    
+(4). 切换用户    
+   # su username    
+2. 将用户添加到管理员权限中   
+  (1).  找到/etc/sudoers    
+       使用编辑器Vi 打开， 进行编辑     
+       找到 root    ALL=(ALL:ALL) ALL    
+  (2). 添加下面语句      
+    username ALL=(ALL:ALL) ALL    
+  (3). 保存退出     
+  (4). 切换用户登录， 尝试打开/etc/sudoers 文件, 记得添加sudo 前缀   
+
+#### 搭建Django Web开发环境
+    
+
+       
+
+    
+    
+
