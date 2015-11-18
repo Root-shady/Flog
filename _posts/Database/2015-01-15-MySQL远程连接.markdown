@@ -1,0 +1,17 @@
+---
+layout: post
+date: 2015-01-15
+category: Database
+title: MySQL远程连接
+comment: true
+---
+#### 在运程主机上安装mysql    
+
+#### 如何导入外部SQL文件
+{% highlight ruby %}
+{% endhighlight%}
+
+#### 从MySQL导出数据   
+
+
+

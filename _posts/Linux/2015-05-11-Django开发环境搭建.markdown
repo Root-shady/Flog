@@ -1,0 +1,28 @@
+---
+layout: post
+title: Django开发环境搭建
+category: Linux
+date: 2015-05-11
+comment: true
+---
+
+#### 搭建虚拟环境
+  为什么需要搭建虚拟环境， 可以
+    stackoverflow 上的说法是不建议使用sudo pip 安装新的package. 这样有安全性问题, 允许任意互联网python代码在你电脑上以root权限运行.
+
+    使用virtualenv时,不要使用sudo前缀,否则容易出现permission denied 问题.
+    如果不清楚是否是因为这问题,可以查看虚拟环境目录的权限
+    sudo chown -R your_username:your_username path/to/virtualenv
+
+    如何解决mysql -connector-python 
+    http://stackoverflow.com/questions/19471972/how-to-avoid-permission-denied-when-using-pip-with-virtualenv
+    如何更新pip安装的包
+    http://stackoverflow.com/questions/2720014/upgrading-all-packages-with-pip
+    
+    如何由Django 1.7 升级到 Django 1.8
+    https://docs.djangoproject.com/en/1.8/howto/upgrade-version/
+
+
+
+
+

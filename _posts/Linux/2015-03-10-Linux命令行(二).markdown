@@ -1,0 +1,42 @@
+---
+layout: post
+title: Linux命令行(二)
+category: Linux
+date: 2015-03-10
+comment: true
+---
+
+#### 如何对指定目录的文件按文件大小排序
+1. 使用du命令    
+    du命令是可以用来查看磁盘的使用情况的命令    
+    $ du -a -d 1 | sort -nr    
+    -a --all 对所有文件显示大小(默认只有文件夹)    
+    -d --max-depth 指定了文件深度(默认是遍历所有子文件夹)    
+    sort 命令对结果进行排序, -n选项规定按数值排序 -r 规定按大到小排序(默认从小到大)    
+    $ du  -ahd 1 | sort -hr    
+    -h --human-readable 选项输出的文件大小是以(B, K, M, G格式)       
+    sort -h --human-numeric-sort 能够正确对(K,M,G)排序    
+
+2. 使用ls命令(只能作用于没有文件夹的排序)    
+    $ ls -lS   
+    -S 选项对文件的按大小排序(默认是按文件名排序)    
+    下面是 $ ls -l的格式：    
+    -rw-r----- 1 shady shady     95957 Oct  3 18:18 jquery-1.11.3.min.js
+    可以采用下面的格式对指定域进行排序：    
+    $ ls -l | sort -k 5 -nr
+    -k 选项指定了使用第五个域作为排序列    
+
+3. 使用find命令     
+   $ find . -type d  -printf '%s %p\n' | sort -nr | head -n 10 
+   -type d  只查找给定目录的文件夹,使用f指定file        
+   printf '%s %p\n' 指定输出文件大小和名称     
+
+#### 批量添加用户和删除用户  
+
+
+
+
+
+
+
+

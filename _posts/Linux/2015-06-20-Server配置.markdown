@@ -40,16 +40,20 @@ comment: true
 
 #### 为系统添加新用户    
   阿里云服务器默认的用户只用root,在服务器管理上使用root帐号比较有风险,可以添加另外一个帐号,并将其添加到sudoers中,当需要使用超级管理权限时,使用sudo命令前缀执行. 下面列出具体做法,以Ubuntu Server为例.   
-1. 创建新用户     
+1. 创建新用户(默认使用root帐号)           
 (1). 为系统添加一个新用户    
     # useradd -m username    
         -m 的意思是为新用户创建一个Home direcotry, 默认为用户名,例如 /home/username      
 (2). 为新用户设置密码     
     # passwd username    
-(3). 查看是否创建成功      
+(3). 指定用户使用的shell     
+    # usermod -s /bin/bash usernam    
+    跳过这一步shell的自动补全功能不能使用.       
+    usermod 指令可以修改一切用户信息,具体google    
+(4). 查看是否创建成功      
     # cat /etc/passwd | grep 'username'    
     如果能看到该用户的相关信息,则创建成功.    
-(4). 切换用户    
+(5). 切换用户    
    # su username    
 2. 将用户添加到管理员权限中   
   (1).  找到/etc/sudoers    
